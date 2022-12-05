@@ -3,7 +3,7 @@ import './about.css'
 import { FaAward } from 'react-icons/fa'
 import { FiUsers } from 'react-icons/fi'
 import {VscFolderLibrary} from 'react-icons/vsc'
-import ME from '../../assets/me-about.jpg'
+import ME from '../../assets/myimg3.png'
 const About = () => {
   return (
   <section id='about'>
@@ -20,23 +20,23 @@ const About = () => {
         <article className='about_card'>
          <FiUsers
          className='about_icon'/>
-         <h5>Client</h5>
-           <small>200+ Worldwide</small>
+         <h5>Student</h5>
+           <small>IIT(ISM) Dhanbad</small>
         </article>
         <article className='about_card'>
          <FaAward className='about_icon'/>
          <h5>Experience</h5>
-           <small>3+ Years Working</small>
+           <small>2+ years Coding</small>
         </article>
         <article className='about_card'>
          <VscFolderLibrary
          className='about_icon'/>
-         <h5>Project</h5>
-           <small>80+ Completed</small>
+         <h5>Projects</h5>
+           <small>5+ Completed</small>
         </article>
        </div>
        <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit obcaecati qui nemo, a quos repellat eveniet, iste, sequi illo velit magnam? Eveniet repellat magnam molestias vero accusantium nulla mollitia suscipit.
+       Hello! I am Shivankar Mehta.I am from Ara,Bihar and I am a 3rd Year BTECH Student of Mechanical Engineering at IIT(ISM) Dhanbad.I am exploring the field of programming from past 2 years.I am a web developer and have worked upon more than 5 projects of web development. Apart from this I love writing hindi poetry,Gajals,short stories etc.I love playing and watching cricket. 
        </p>
        <a href="#contact" className='btn btn-primary'>Let's Talk</a>
     </div>
