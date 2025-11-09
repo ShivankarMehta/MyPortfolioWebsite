@@ -1,6 +1,6 @@
 import React from 'react'
 import './testimonials.css'
-import Avt1 from '../../assets/myimg2.png'
+import Avt1 from '../../assets/profile.png'
 
 import { Pagination} from 'swiper';
 

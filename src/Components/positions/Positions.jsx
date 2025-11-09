@@ -1,61 +1,55 @@
 import React from 'react'
 import './positions.css'
-import {BiCheck} from 'react-icons/bi'
-const Services = () => {
+import { BiCheck } from 'react-icons/bi'
+
+const positions = [
+  {
+    title: 'Founder of a YouTube channel “Integrative Learning”.',
+    bullets: [
+      'Led a 20-member cross-functional team operating the channel.',
+      'Headed overall management and the teaching department.'
+    ]
+  },
+  {
+    title: 'Member of Student Coordination Placement Team · IIT Dhanbad',
+    bullets: [
+      'Served in the communication division of SCPT 2023.',
+      'Coordinated with hiring partners and supported assessments and interviews.'
+    ]
+  },
+  {
+    title: 'Member of Different Clubs',
+    bullets: [
+      'Coordinator of Chayanika Sangh, the Hindi literary club of IIT(ISM) Dhanbad.',
+      'Co-founder of the student-led organisation “ISM Warriors”.',
+      'Additional responsibilities handled confidentially — stay tuned!'
+    ]
+  }
+]
+
+const Positions = () => {
   return (
-    <section id='positions'>
-      <h5>LEADERSHIP POSITIONS / CLUBS</h5>
+    <section id='positions' data-reveal="fade-up">
       <h2>PORs</h2>
       <div className="container services_container">
-        <article className='service'>
-          <div className="services_head">
-            <h3>Founder of a YouTube channel “Integrative Learning”. </h3>
-          </div>
-          <ul className='service_list'>
-            <li><BiCheck className='service_list-icon'/>
-            <p>Experience in leading a big team of 20
-members working on that channel.
-</p></li>
-            <li><BiCheck className='service_list-icon'/>
-            <p>Role: Headed its
-management and teaching department.</p></li>
-          </ul>
-        </article>
-        {/**End of UI/UX card**/}
-        <article className='service'>
-          <div className="services_head">
-            <h3>Member of Student coordination Placement team
-of IIT Dhanbad
-</h3>
-          </div>
-          <ul className='service_list'>
-            <li><BiCheck className='service_list-icon'/>
-            <p>I am in Communication division of SCPT 2023</p></li>
-            <li><BiCheck className='service_list-icon'/>
-            <p>Role: communication with the HRs, voluntering the conduction of tests & interviews
-</p></li>
-          </ul>
-        </article>
-        {/**End of 2nd card**/}
-        <article className='service'>
-          <div className="services_head">
-            <h3>Member of Different Clubs</h3>
-          </div>
-          <ul className='service_list'>
-            <li><BiCheck className='service_list-icon'/>
-            <p>Coordinator of Chayanika Sangh “ a Hindi literary
-club of IIT(ISM) Dhanbad”</p></li>
-            <li><BiCheck className='service_list-icon'/>
-            <p>Co-Founder of a student-run organization named
-“ISM Warriors”</p></li>
-<li><BiCheck className='service_list-icon'/>
-            <p>Can't Reveal more ..HaHaHa</p></li>
-          </ul>
-        </article>
-        {/**End of 3rd card**/}
+        {positions.map(({ title, bullets }) => (
+          <article className='service service--position' data-tilt data-reveal="fade-up" key={title}>
+            <div className="services_head">
+              <h3>{title}</h3>
+            </div>
+            <ul className='service_list'>
+              {bullets.map((bullet) => (
+                <li key={bullet} data-reveal="fade-up">
+                  <BiCheck className='service_list-icon' aria-hidden="true" />
+                  <p>{bullet}</p>
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))}
       </div>
     </section>
   )
 }
 
-export default Services
+export default Positions

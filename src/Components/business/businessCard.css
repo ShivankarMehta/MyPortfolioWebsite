@@ -1,0 +1,53 @@
+#business-card {
+  position: relative;
+  margin-top: 0;
+  padding: 3.2rem 0 4.2rem;
+  background: linear-gradient(155deg, #04060d 0%, #060b18 45%, #03040a 100%);
+  overflow: hidden;
+}
+
+#business-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 18% 80%, rgba(255, 140, 102, 0.08), transparent 65%),
+    linear-gradient(125deg, rgba(12, 16, 28, 0.85), rgba(5, 7, 16, 0.92));
+  opacity: 0.9;
+  z-index: 0;
+}
+
+#business-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 60% 0%, rgba(255, 255, 255, 0.08), transparent 55%);
+  z-index: 0;
+}
+
+.business-card__container {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.business-card__image {
+  width: min(640px, 100%);
+  border-radius: 1.6rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow:
+    0 28px 54px rgba(7, 13, 32, 0.45),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+
+@media screen and (max-width: 600px) {
+  #business-card {
+    padding: 2.8rem 0 3.2rem;
+  }
+
+  .business-card__image {
+    border-radius: 1.2rem;
+  }
+}

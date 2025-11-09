@@ -1,47 +1,55 @@
 import React from 'react'
 import './about.css'
-import { FaAward } from 'react-icons/fa'
-import { FiUsers } from 'react-icons/fi'
-import {VscFolderLibrary} from 'react-icons/vsc'
-import ME from '../../assets/myimg3.png'
+import ME from '../../assets/profile1.png'
+
 const About = () => {
   return (
-  <section id='about'>
-   <h5>Get To Know</h5>
-   <h2>About Me</h2>
-   <div className="container about_container">
-    <div className="about_me">
-        <div className="about_me-image">
-          <img src={ME} alt="About me" />
+    <section id='about' data-reveal="fade-up">
+      <div className="container about__container">
+        <div className="about__visual" data-reveal="zoom-in">
+          <div className="about__glow about__glow--one" aria-hidden="true" />
+          <div className="about__glow about__glow--two" aria-hidden="true" />
+          <div className="about__frame">
+            <div className="about__image">
+              <img src={ME} alt="Shivankar speaking at an event" />
+            </div>
+          </div>
+          <div className="about__floating-card">
+            <span className="about__floating-label">Current role</span>
+            <p>
+              Software &amp; System Engineer {' '}
+              <a href="https://standardforce.jp/" target="_blank" rel="noreferrer">
+                Standardforce Corporation, Japan
+              </a>
+            </p>
+          </div>
         </div>
-    </div>
-    <div className="about_content">
-       <div className="about_cards">
-        <article className='about_card'>
-         <FiUsers
-         className='about_icon'/>
-         <h5>Student</h5>
-           <small>IIT(ISM) Dhanbad</small>
-        </article>
-        <article className='about_card'>
-         <FaAward className='about_icon'/>
-         <h5>Experience</h5>
-           <small>2+ years Coding</small>
-        </article>
-        <article className='about_card'>
-         <VscFolderLibrary
-         className='about_icon'/>
-         <h5>Projects</h5>
-           <small>5+ Completed</small>
-        </article>
-       </div>
-       <p>
-       Hello! I am Shivankar Mehta.I am from Ara,Bihar and I am a 3rd Year BTECH Student of Mechanical Engineering at IIT(ISM) Dhanbad.I am exploring the field of programming from past 2 years.I am a web developer and have worked upon more than 5 projects of web development. Apart from this I love writing hindi poetry,Gajals,short stories etc.I love playing and watching cricket. 
-       </p>
-       <a href="#contact" className='btn btn-primary'>Let's Talk</a>
-    </div>
-   </div>
-  </section>
+
+        <div className="about__content" data-reveal="fade-up">
+          <p>
+            Hi, I&apos;m Shivankar Mehta, a passionate full stack developer with a Bachelor of Technology in
+            Mechanical Engineering from the Indian Institute of Technology (ISM) Dhanbad. My journey from
+            mechanical systems to digital ecosystems reflects a love for building—whether it&apos;s machines or
+            scalable software solutions.
+          </p>
+          <p>
+            I specialise in ReactJS, NextJS, NodeJS, MySQL, and Redis, crafting robust web applications and
+            enterprise dashboards that bring data, design, and performance together. I enjoy solving
+            real-world problems through clean architecture, OOP principles, and system design thinking.
+          </p>
+          <p>
+            Currently, I work as a Software Developer and System Engineer at{' '}
+            <a href="https://standardforce.jp/" target="_blank" rel="noreferrer">
+              Standardforce Corporation
+            </a>{' '}
+            in Japan, where I design and maintain enterprise-level construction management systems and data
+            integration tools. Previously, I interned with Life Team United (Japan) and Urban Reach &amp; Fynii
+            (India), gaining hands-on experience building full-stack dashboards and supply chain management
+            platforms.
+          </p>
+        </div>
+      </div>
+    </section>
   )
 }
 
