@@ -1,7 +1,7 @@
 import React from 'react'
 import './header.css'
 import CTA from './CTA'
-import ME from '../../assets/profile.png'
+import ME from '../../assets/profile.webp'
 import Headersocials from './Headersocials'
 import { HiOutlineSparkles } from 'react-icons/hi'
 import { FiServer, FiLayers } from 'react-icons/fi'
@@ -59,7 +59,7 @@ const Header = () => {
       <div className="container header__container">
         <div className="header__content" data-reveal="fade-up">
           <h1>Shivankar Mehta</h1>
-          <div className="header__role">
+          <div className="header__role" data-reveal="fade-up">
             <span className="header__role-title">Software &amp; System Engineer</span>
             <a
               href="https://standardforce.jp/"
@@ -84,7 +84,7 @@ const Header = () => {
         </div>
         <div className="header__stats" data-reveal="fade-up">
           {stats.map(({ value, label, icon }) => (
-            <div className="header__stat glass-card" data-tilt data-reveal="zoom-in" key={`${value}-${label}`}>
+            <div className="header__stat glass-card" data-reveal="zoom-in" key={`${value}-${label}`}>
               <span className="header__stat-icon" aria-hidden="true">
                 {icon}
               </span>
