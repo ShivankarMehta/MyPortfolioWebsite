@@ -1,118 +1,194 @@
 import React from 'react'
 import './header.css'
 import CTA from './CTA'
-import ME from '../../assets/profile.webp'
+import ME from '../../assets/profile1.png'
 import Headersocials from './Headersocials'
-import { HiOutlineSparkles } from 'react-icons/hi'
-import { FiServer, FiLayers } from 'react-icons/fi'
+import { usePreferences } from '../../context/PreferencesContext'
 
-const stats = [
+const stackDomains = [
   {
-    value: '2+ Years',
-    label: 'Hands-on building software systems',
-    icon: <HiOutlineSparkles />
+    id: 'languages',
+    orbit: 'CORE',
+    summary: 'JS / Python',
+    items: ['JavaScript', 'Python', 'C++', 'SQL']
   },
   {
-    value: '6+ Deployments',
-    label: 'Enterprise systems launched',
-    icon: <FiServer />
+    id: 'frontend',
+    orbit: 'UI',
+    summary: 'Next.js',
+    items: ['ReactJS', 'NextJS', 'HTML', 'CSS', 'Recharts', 'Tremor', 'Nivo', 'Browser APIs']
   },
   {
-    value: 'Platforms',
-    label: 'Dashboards • CMS • Data pipelines',
-    icon: <FiLayers />
+    id: 'backend',
+    orbit: 'API',
+    summary: 'Node.js',
+    items: ['NodeJS', 'ExpressJS', 'REST APIs', 'SSH2', 'WebSockets', 'Streams', 'Clusters']
+  },
+  {
+    id: 'data',
+    orbit: 'DATA',
+    summary: 'MySQL',
+    items: ['MySQL', 'PostgreSQL', 'Redis', 'pgvector', 'pg-boss', 'ETL Pipelines', 'Query Optimization']
+  },
+  {
+    id: 'ai',
+    orbit: 'AI',
+    summary: 'RAG',
+    items: ['MCP Server', 'LLM Integration', 'RAG', 'Gemini API', 'LangChain', 'Document Intelligence', 'OCR']
+  },
+  {
+    id: 'operations',
+    orbit: 'OPS',
+    summary: 'Linux',
+    items: ['Docker', 'Git', 'CI/CD', 'AlmaLinux', 'CentOS', 'Server Management', 'Sakura Internet', 'Operating Systems', 'Computer Networks']
   }
 ]
 
-const skills = [
-  'JavaScript',
-  'C++',
-  'SQL',
-  'ReactJS',
-  'Next.js',
-  'HTML',
-  'CSS',
-  'Bootstrap',
-  'Node.js',
-  'Express.js',
-  'REST API',
-  'WebSockets',
-  'MySQL',
-  'MongoDB',
-  'Redis',
-  'AlmaLinux',
-  'CentOS',
-  'Server Management',
-  'Git',
-  'Sakura Internet',
-  'System Design',
-  'Data Structures & Algorithms',
-  'Object-Oriented Programming',
-  'DBMS',
-  'Computer Networks',
-  'Operating Systems'
+const networkRoutes = [
+  { endpoint: 'next.dashboard', protocol: 'HTTPS', state: '200 OK' },
+  { endpoint: 'node.gateway', protocol: 'WSS', state: 'LIVE' },
+  { endpoint: 'mysql.cluster', protocol: 'SSH2', state: 'SYNC' },
+  { endpoint: 'rag.vector', protocol: 'SSE', state: 'READY' }
+]
+
+const observatorySignals = [
+  { id: 'docker', label: 'Docker' },
+  { id: 'websocket', label: 'WebSocket' },
+  { id: 'redis', label: 'Redis' },
+  { id: 'ssh2', label: 'SSH2' },
+  { id: 'vector', label: 'pgvector' },
+  { id: 'ocr', label: 'OCR' },
+  { id: 'cicd', label: 'CI/CD' },
+  { id: 'rest', label: 'REST' }
 ]
 
 const Header = () => {
+  const { copy } = usePreferences()
+  const text = copy.header
+
   return (
-    <header id='home' data-reveal="fade-in">
+    <header id="home">
       <div className="container header__container">
-        <div className="header__content" data-reveal="fade-up">
+        <div className="header__content">
+          <div className="header__command" aria-label="Current development focus">
+            <span>shivankar@portfolio:~$</span>
+            <code>deploy --focus reliable-systems</code>
+            <i aria-hidden="true" />
+          </div>
+          <span className="header__eyebrow">{text.eyebrow}</span>
+          <div className="header__availability">
+            <span aria-hidden="true" />
+            {text.availability}
+          </div>
           <h1>Shivankar Mehta</h1>
-          <div className="header__role" data-reveal="fade-up">
-            <span className="header__role-title">Software &amp; System Engineer</span>
-            <a
-              href="https://standardforce.jp/"
-              className="header__role-company"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Standardforce Corporation · Japan 🇯🇵
+          <div className="header__role">
+            <span className="header__role-title">{text.workingAt}</span>
+            <a href="https://standardforce.jp/" className="header__role-company" target="_blank" rel="noreferrer">
+              Standard Force Corporation
             </a>
           </div>
           <p className="header__lead">
-            Currently I’m building and maintaining enterprise-grade construction management and data systems
-            deployed across multiple client organizations. My focus is crafting scalable, data-driven dashboards,
-            optimising backend workflows, and ensuring system reliability and performance so Standardforce teams
-            can deliver dependable tooling for construction intelligence across Japan.
+            {text.lead}
           </p>
-          <div className="header__cta" data-reveal="fade-up">
-            <CTA />
-          </div>
-          <span className="header__spotlight header__spotlight--one" aria-hidden="true" />
-          <span className="header__spotlight header__spotlight--two" aria-hidden="true" />
-        </div>
-        <div className="header__stats" data-reveal="fade-up">
-          {stats.map(({ value, label, icon }) => (
-            <div className="header__stat glass-card" data-reveal="zoom-in" key={`${value}-${label}`}>
-              <span className="header__stat-icon" aria-hidden="true">
-                {icon}
-              </span>
-              <div className="header__stat-copy">
-                <span className="header__stat-value">{value}</span>
-                <span className="header__stat-label">{label}</span>
+          <div className="header__focus" aria-label={text.focusAria}>
+            {text.focus.map(([title, detail], index) => (
+              <div className="header__focus-module" key={title}>
+                <small>{String(index + 1).padStart(2, '0')}</small>
+                <strong>{title}</strong>
+                <span>{detail}</span>
               </div>
-            </div>
-          ))}
-        </div>
-        <div className="header__visual" data-reveal="zoom-in">
-          <span className="header__visual-glow header__visual-glow--one" aria-hidden="true" />
-          <span className="header__visual-glow header__visual-glow--two" aria-hidden="true" />
-          <div className="header__halo">
-            <div className="header__image">
-              <img src={ME} alt="Portrait of Shivankar" />
-            </div>
-          </div>
-        </div>
-        <div className="header__ticker" aria-hidden="true" data-reveal="slide-left">
-          <div className="header__ticker-track">
-            {[...skills, ...skills].map((skill, index) => (
-              <span className="header__ticker-chip" key={`${skill}-${index}`}>
-                {skill}
-              </span>
             ))}
           </div>
+          <div className="header__cta">
+            <CTA />
+          </div>
         </div>
+
+        <div className="header__visual">
+          <div className="observatory">
+            <div className="observatory__header">
+              <span><i /> {text.observatory}</span>
+              <small>{text.productionProfile}</small>
+            </div>
+            <div className="observatory__stage">
+              <svg className="observatory__fabric" viewBox="0 0 580 376" preserveAspectRatio="none" aria-hidden="true">
+                <path className="fabric__route" d="M78 86 H172 C214 86 212 156 286 188" />
+                <path className="fabric__route fabric__route--reverse" d="M502 86 H410 C366 86 365 154 294 188" />
+                <path className="fabric__route" d="M76 294 H170 C214 294 214 220 286 190" />
+                <path className="fabric__route fabric__route--reverse" d="M502 294 H410 C365 294 365 221 294 190" />
+                <path className="fabric__route fabric__route--vertical" d="M290 40 V126" />
+                <path className="fabric__route fabric__route--vertical" d="M290 336 V250" />
+                <path className="fabric__packet fabric__packet--one" pathLength="1" d="M78 86 H172 C214 86 212 156 286 188" />
+                <path className="fabric__packet fabric__packet--two" pathLength="1" d="M502 86 H410 C366 86 365 154 294 188" />
+                <path className="fabric__packet fabric__packet--three" pathLength="1" d="M76 294 H170 C214 294 214 220 286 190" />
+                <path className="fabric__packet fabric__packet--four" pathLength="1" d="M502 294 H410 C365 294 365 221 294 190" />
+                <path className="fabric__packet fabric__packet--five" pathLength="1" d="M290 40 V126" />
+              </svg>
+              <span className="observatory__ring observatory__ring--outer" aria-hidden="true" />
+              <span className="observatory__ring observatory__ring--inner" aria-hidden="true" />
+              <div className="header__halo">
+                <div className="header__image">
+                  <img src={ME} alt="Shivankar Mehta" width="1080" height="1350" fetchPriority="high" />
+                </div>
+              </div>
+              {stackDomains.map(({ id, orbit, summary }) => (
+                <span className={`observatory__node observatory__node--${id}`} key={id}>
+                  {orbit}<br /><small>{summary}</small>
+                </span>
+              ))}
+              {observatorySignals.map(({ id, label }) => (
+                <span className={`observatory__signal observatory__signal--${id}`} key={id}>
+                  {label}
+                </span>
+              ))}
+            </div>
+            <div className="observatory__console">
+              <div className="console-panel terminal-panel">
+                <div className="console-panel__label">
+                  <span>terminal / live.log</span>
+                  <small>zsh</small>
+                </div>
+                {text.terminalEvents.map((event, index) => (
+                  <p key={event}><small>{String(index + 1).padStart(2, '0')}</small>{event}</p>
+                ))}
+                <p className="console__prompt"><strong>shivankar@systems:~$</strong><i aria-hidden="true" /></p>
+              </div>
+              <div className="console-panel packet-panel">
+                <div className="console-panel__label">
+                  <span>network / routes</span>
+                  <small>TX/RX</small>
+                </div>
+                {networkRoutes.map(({ endpoint, protocol, state }) => (
+                  <div className="packet-row" key={endpoint}>
+                    <i aria-hidden="true" />
+                    <code>{endpoint}</code>
+                    <small>{protocol}</small>
+                    <strong>{state}</strong>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="observatory__stack-grid" aria-label={text.fullStack}>
+              {stackDomains.map(({ id, items }) => (
+                <div className={`observatory__stack observatory__stack--${id}`} key={id}>
+                  <strong>{text.domains[id]}</strong>
+                  <p>{items.join(' / ')}</p>
+                </div>
+              ))}
+            </div>
+            <div className="observatory__footer">
+              {text.footer.map(([label, value]) => (
+                <span key={label}><strong>{label}</strong> {value}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <a className="header__continue" href="#about">
+          {text.explore}
+          <span aria-hidden="true" />
+        </a>
+
       </div>
       <Headersocials />
     </header>

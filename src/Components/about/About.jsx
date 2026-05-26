@@ -1,52 +1,42 @@
 import React from 'react'
 import './about.css'
-import ME from '../../assets/profile1.png'
+import OSWindowBar from '../ui/OSWindowBar'
+import { usePreferences } from '../../context/PreferencesContext'
 
 const About = () => {
-  return (
-    <section id='about' data-reveal="fade-up">
-      <div className="container about__container">
-        <div className="about__visual" data-reveal="zoom-in">
-          <div className="about__glow about__glow--one" aria-hidden="true" />
-          <div className="about__glow about__glow--two" aria-hidden="true" />
-          <div className="about__frame">
-            <div className="about__image">
-              <img src={ME} alt="Shivankar speaking at an event" />
-            </div>
-          </div>
-          <div className="about__floating-card">
-            <span className="about__floating-label">Current role</span>
-            <p>
-              Software &amp; System Engineer {' '}
-              <a href="https://standardforce.jp/" target="_blank" rel="noreferrer">
-                Standardforce Corporation, Japan
-              </a>
-            </p>
-          </div>
-        </div>
+  const { copy } = usePreferences()
+  const text = copy.about
 
+  return (
+    <section id="about">
+      <div className="container about__container os-surface module-panel module-panel--profile">
+        <OSWindowBar module="SYS-01 / PROFILE" path="/usr/shivankar/about.profile" status={text.status} />
+        <div className="section-heading" data-reveal="fade-up">
+          <span className="section-kicker">{text.kicker}</span>
+          <h2>{text.title}</h2>
+        </div>
         <div className="about__content" data-reveal="fade-up">
-          <p>
-            Hi, I&apos;m Shivankar Mehta, a passionate full stack developer with a Bachelor of Technology in
-            Mechanical Engineering from the Indian Institute of Technology (ISM) Dhanbad. My journey from
-            mechanical systems to digital ecosystems reflects a love for building—whether it&apos;s machines or
-            scalable software solutions.
-          </p>
-          <p>
-            I specialise in ReactJS, NextJS, NodeJS, MySQL, and Redis, crafting robust web applications and
-            enterprise dashboards that bring data, design, and performance together. I enjoy solving
-            real-world problems through clean architecture, OOP principles, and system design thinking.
-          </p>
-          <p>
-            Currently, I work as a Software Developer and System Engineer at{' '}
-            <a href="https://standardforce.jp/" target="_blank" rel="noreferrer">
-              Standardforce Corporation
-            </a>{' '}
-            in Japan, where I design and maintain enterprise-level construction management systems and data
-            integration tools. Previously, I interned with Life Team United (Japan) and Urban Reach &amp; Fynii
-            (India), gaining hands-on experience building full-stack dashboards and supply chain management
-            platforms.
-          </p>
+          {text.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+        </div>
+        <div className="about__metrics" data-reveal="fade-up">
+          {text.credentials.map(([title, detail, meta]) => (
+            <article className="about__metric" key={title}>
+              <span>{title}</span>
+              <p>{detail}</p>
+              <small>{meta}</small>
+            </article>
+          ))}
+        </div>
+        <div className="system-flow" data-reveal="fade-up" aria-label={text.flowLabel}>
+          <div className="system-flow__title">{text.flowTitle}</div>
+          <div className="system-flow__path">
+            {text.flow.map(([label, detail], index) => (
+              <React.Fragment key={label}>
+                <span><strong>{label}</strong><small>{detail}</small></span>
+                {index < text.flow.length - 1 && <i aria-hidden="true" />}
+              </React.Fragment>
+            ))}
+          </div>
         </div>
       </div>
     </section>

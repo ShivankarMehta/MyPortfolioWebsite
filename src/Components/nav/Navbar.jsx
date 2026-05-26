@@ -1,26 +1,21 @@
 import React, { useState, useEffect } from 'react'
-import { Menu } from 'lucide-react'
+import { Languages, Menu, Moon, Sun } from 'lucide-react'
 import './navbar.css'
+import { usePreferences } from '../../context/PreferencesContext'
 
-const links = [
-  { id: '#home', label: 'Home' },
-  { id: '#about', label: 'About' },
-  { id: '#experience', label: 'Skills' },
-  { id: '#portfolio', label: 'Jobs/Internships' },
-  { id: '#services', label: 'Projects' },
-  { id: '#positions', label: 'Positions' },
-  { id: '#contact', label: 'Contact' }
-]
+const linkIds = ['#home', '#about', '#experience', '#portfolio', '#services', '#github', '#writing', '#positions', '#contact']
 
 const Navbar = () => {
   const [activeNav, setActiveNav] = useState('#home')
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const { copy, language, theme, toggleLanguage, toggleTheme } = usePreferences()
+  const links = linkIds.map((id, index) => ({ id, label: copy.nav.links[index] }))
 
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY + 120
-      const sections = links
-        .map(({ id }) => document.querySelector(id))
+      const sections = linkIds
+        .map((id) => document.querySelector(id))
         .filter(Boolean)
 
       for (let i = sections.length - 1; i >= 0; i -= 1) {
@@ -55,7 +50,7 @@ const Navbar = () => {
     <nav className="nav">
       <div className="container nav__inner">
         <a href="#home" className="nav__brand" onClick={() => handleNavClick('#home')}>
-          Home
+          {copy.nav.links[0]}
         </a>
         <button
           className="nav__toggle"
@@ -82,8 +77,22 @@ const Navbar = () => {
             </li>
           ))}
         </ul>
+        <div className="nav__utilities" aria-label="Display preferences">
+          <button className="nav__control" type="button" onClick={toggleLanguage} aria-label={copy.nav.language}>
+            <Languages size={16} aria-hidden="true" />
+            {language === 'en' ? '日本語' : 'EN'}
+          </button>
+          <button
+            className="nav__control nav__control--icon"
+            type="button"
+            onClick={toggleTheme}
+            aria-label={theme === 'dark' ? copy.nav.themeLight : copy.nav.themeDark}
+          >
+            {theme === 'dark' ? <Sun size={16} aria-hidden="true" /> : <Moon size={16} aria-hidden="true" />}
+          </button>
+        </div>
         <a href="#contact" className="btn btn-primary nav__cta">
-          Let&apos;s talk
+          {copy.nav.contact}
         </a>
       </div>
     </nav>

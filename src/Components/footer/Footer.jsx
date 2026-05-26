@@ -1,31 +1,16 @@
 import React from 'react'
 import './footer.css'
-import { BsLinkedin } from 'react-icons/bs'
-import { FaGithub } from 'react-icons/fa'
-import { FiInstagram } from 'react-icons/fi'
+import { usePreferences } from '../../context/PreferencesContext'
 
 const Footer = () => {
-  return (
-    <footer data-reveal="fade-up">
-      <div className="container footer__container">
-        <div className="footer__social-row" data-reveal="fade-up">
-          <span className="footer__tag">Connect</span>
-          <div className="footer__socials">
-            <a href="https://www.linkedin.com/in/shivankar-mehta-058b29207/" target="blank" aria-label="LinkedIn">
-              <BsLinkedin />
-            </a>
-            <a href="https://github.com/ShivankarMehta" target="blank" aria-label="GitHub">
-              <FaGithub />
-            </a>
-            <a href="https://www.instagram.com/shivankarmehta/" target="blank" aria-label="Instagram">
-              <FiInstagram />
-            </a>
-          </div>
-        </div>
+  const { copy } = usePreferences()
 
-        <div className="footer__bottom">
-          <small>© {new Date().getFullYear()} Shivankar Mehta. All rights reserved.</small>
-        </div>
+  return (
+    <footer>
+      <div className="container footer__container">
+        <a href="#home" className="footer__brand">Shivankar Mehta</a>
+        <p>{copy.footer.title}</p>
+        <small>&copy; {new Date().getFullYear()} Shivankar Mehta. {copy.footer.rights}</small>
       </div>
     </footer>
   )
