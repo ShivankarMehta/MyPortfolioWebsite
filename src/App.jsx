@@ -5,9 +5,11 @@ import About from './Components/about/About'
 import Experience from './Components/experience/Experience'
 import Portfolio from './Components/portfolio/Portfolio'
 import Services from './Components/services/Services'
+import CaseStudies from './Components/caseStudies/CaseStudies'
 import GithubProfile from './Components/github/GithubProfile'
 import Articles from './Components/articles/Articles'
 import Positions from './Components/positions/Positions'
+import CommandPalette from './Components/commandPalette/CommandPalette'
 import Contact from './Components/contact/Contact'
 import BusinessCard from './Components/business/BusinessCard'
 import Footer from './Components/footer/Footer'
@@ -80,6 +82,11 @@ const App = () => {
       '.system-flow__path span',
       '.portfolio_item',
       '.service',
+      '.case-study-tab',
+      '.case-study-detail',
+      '.architecture-viewer',
+      '.profile-signal',
+      '.command-lab__shell',
       '.github__repo',
       '.experience_details',
       '.article-card',
@@ -208,10 +215,12 @@ const App = () => {
         <Navbar />
         <main id="main-content" tabIndex="-1">
           <Header />
+          <CommandPalette />
           <About />
           <Experience />
           <Portfolio />
           <Services />
+          <CaseStudies />
           <GithubProfile />
           <Articles />
           <Positions />

@@ -1,21 +1,36 @@
 import React from 'react'
 import './services.css'
 import { ArrowUpRight } from 'lucide-react'
-import urbanImage from '../../assets/project-urban.webp'
-import dataImage from '../../assets/project-data.webp'
-import classroomImage from '../../assets/project-classroom.webp'
+import aiDocumentImage from '../../assets/project-ai-document.webp'
+import etlPipelineImage from '../../assets/project-etl-pipeline.webp'
+import constructionImage from '../../assets/project-construction-management.webp'
+import qrLogisticsImage from '../../assets/project-qr-logistics.webp'
+import supplyChainImage from '../../assets/project-supply-chain.webp'
+import classroomImage from '../../assets/project-classroom-platform.webp'
 import OSWindowBar from '../ui/OSWindowBar'
 import { usePreferences } from '../../context/PreferencesContext'
 
 const projects = [
   {
-    stack: 'Gemini Vision | LangChain | pgvector | SSE',
-    image: dataImage
+    stack: 'Gemini Vision | Tesseract OCR | pgvector | pg-boss | LangChain | SSE',
+    image: aiDocumentImage
   },
   {
-    stack: 'Node.js | MySQL | SSH2 | Cron',
-    image: urbanImage,
+    stack: 'MySQL | SSH2 | Cron | Docker | AlmaLinux',
+    image: etlPipelineImage,
     link: 'https://github.com/ShivankarMehta/multi-server-data-transfer'
+  },
+  {
+    stack: 'AlmaLinux | Budget Alerts | Financial Tracking | Compliance',
+    image: constructionImage
+  },
+  {
+    stack: 'Next.js | Redis | Recharts | Tremor | Excel Export | QR Tracking',
+    image: qrLogisticsImage
+  },
+  {
+    stack: 'ReactJS | NodeJS | MySQL | Nivo | Wijmo | Laravel',
+    image: supplyChainImage
   },
   {
     stack: 'React | Node.js | WebRTC | Python ML',

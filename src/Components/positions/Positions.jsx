@@ -2,6 +2,7 @@ import React from 'react'
 import './positions.css'
 import OSWindowBar from '../ui/OSWindowBar'
 import { usePreferences } from '../../context/PreferencesContext'
+import LeetCodeProfile from './LeetCodeProfile'
 
 const Positions = () => {
   const { copy } = usePreferences()
@@ -24,6 +25,7 @@ const Positions = () => {
             </article>
           ))}
         </div>
+        <LeetCodeProfile text={text} />
       </div>
     </section>
   )

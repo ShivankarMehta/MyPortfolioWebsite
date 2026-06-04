@@ -4,6 +4,33 @@ import OSWindowBar from '../ui/OSWindowBar'
 import { usePreferences } from '../../context/PreferencesContext'
 
 const profileUrl = 'https://github.com/ShivankarMehta'
+const contributionMonths = ['Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May']
+
+const contributionWeeks = Array.from({ length: 52 }, (_, weekIndex) => {
+  return Array.from({ length: 7 }, (_, dayIndex) => {
+    const seasonalBoost =
+      (weekIndex >= 7 && weekIndex <= 27) ||
+      (weekIndex >= 35 && weekIndex <= 50)
+    const quietWindow = weekIndex >= 29 && weekIndex <= 33
+    const pulse = (weekIndex * 3 + dayIndex * 5) % 11
+    const wave = (weekIndex + dayIndex * 2) % 7
+
+    let level = 0
+
+    if (seasonalBoost) {
+      level = pulse > 7 ? 4 : pulse > 4 ? 3 : pulse > 1 ? 2 : 1
+    } else if (quietWindow) {
+      level = pulse > 8 ? 2 : pulse > 6 ? 1 : 0
+    } else {
+      level = wave > 4 ? 2 : wave > 2 ? 1 : 0
+    }
+
+    return {
+      id: `${weekIndex}-${dayIndex}`,
+      level
+    }
+  })
+})
 
 const repositories = [
   {
@@ -81,6 +108,30 @@ const GithubProfile = () => {
               <span>{label}</span>
             </div>
           ))}
+        </div>
+
+        <div className="github__heatmap" data-reveal="fade-up">
+          <div className="github__subhead">{text.heatmapTitle}</div>
+          <div className="github__heatmap-frame">
+            <div className="github__heatmap-months" aria-hidden="true">
+              {contributionMonths.map((month) => <span key={month}>{month}</span>)}
+            </div>
+            <div className="github__heatmap-grid" role="img" aria-label={text.heatmapAlt}>
+              {contributionWeeks.map((week, weekIndex) => (
+                <div className="github__heatmap-week" key={`week-${weekIndex}`}>
+                  {week.map(({ id, level }) => (
+                    <span className="github__heatmap-day" data-level={level} key={id} />
+                  ))}
+                </div>
+              ))}
+            </div>
+            <div className="github__heatmap-legend" aria-hidden="true">
+              <span>Less</span>
+              {[0, 1, 2, 3, 4].map((level) => <i data-level={level} key={level} />)}
+              <span>More</span>
+            </div>
+          </div>
+          <p>{text.heatmapCaption}</p>
         </div>
 
         <div className="github__workspace">

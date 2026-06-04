@@ -752,7 +752,7 @@ header::after {
 @media screen and (max-width: 600px) {
   header {
     min-height: unset;
-    padding: 3.2rem 0 1.8rem;
+    padding: 0.65rem 0 1.8rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -760,16 +760,16 @@ header::after {
   }
 
   .header__container {
-    gap: 1.8rem;
-    row-gap: 1.5rem;
+    gap: 1.15rem;
+    row-gap: 1.05rem;
     width: 100%;
-    padding: 1.1rem 1rem 1.4rem;
+    padding: 0;
     justify-items: center;
-    background: rgba(7, 11, 31, 0.42);
-    border-radius: 1.4rem;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    box-shadow: 0 14px 32px rgba(7, 11, 31, 0.28);
-    max-width: 340px;
+    background: transparent;
+    border-radius: 0;
+    border: 0;
+    box-shadow: none;
+    max-width: none;
     margin: 0 auto;
   }
 
@@ -839,9 +839,10 @@ header::after {
   }
 
   .header__visual {
+    order: 0;
     justify-content: center;
     width: 100%;
-    max-width: 280px;
+    max-width: 100%;
   }
 
   .header__halo {
@@ -1032,5 +1033,4 @@ header::after {
     transform: translateX(-50%);
   }
 }
-
 

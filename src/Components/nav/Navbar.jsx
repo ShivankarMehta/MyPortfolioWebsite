@@ -80,7 +80,7 @@ const Navbar = () => {
         <div className="nav__utilities" aria-label="Display preferences">
           <button className="nav__control" type="button" onClick={toggleLanguage} aria-label={copy.nav.language}>
             <Languages size={16} aria-hidden="true" />
-            {language === 'en' ? '日本語' : 'EN'}
+            {language === 'en' ? 'JA' : 'EN'}
           </button>
           <button
             className="nav__control nav__control--icon"

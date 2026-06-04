@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './header.css'
 import CTA from './CTA'
 import ME from '../../assets/profile1.png'
@@ -40,7 +40,7 @@ const stackDomains = [
     id: 'operations',
     orbit: 'OPS',
     summary: 'Linux',
-    items: ['Docker', 'Git', 'CI/CD', 'AlmaLinux', 'CentOS', 'Server Management', 'Sakura Internet', 'Operating Systems', 'Computer Networks']
+    items: ['Docker', 'Git', 'CI/CD', 'AlmaLinux', 'CentOS', 'Server Management', 'Sakura Internet']
   }
 ]
 
@@ -53,7 +53,7 @@ const networkRoutes = [
 
 const observatorySignals = [
   { id: 'docker', label: 'Docker' },
-  { id: 'websocket', label: 'WebSocket' },
+  { id: 'websocket', label: 'Next.js' },
   { id: 'redis', label: 'Redis' },
   { id: 'ssh2', label: 'SSH2' },
   { id: 'vector', label: 'pgvector' },
@@ -65,6 +65,11 @@ const observatorySignals = [
 const Header = () => {
   const { copy } = usePreferences()
   const text = copy.header
+  const [openObservatoryPanel, setOpenObservatoryPanel] = useState(null)
+
+  const toggleObservatoryPanel = (panel) => {
+    setOpenObservatoryPanel((current) => (current === panel ? null : panel))
+  }
 
   return (
     <header id="home">
@@ -142,7 +147,30 @@ const Header = () => {
                 </span>
               ))}
             </div>
-            <div className="observatory__console">
+            <div className="observatory__mobile-controls" aria-label="Observatory mobile sections">
+              <button
+                type="button"
+                className={openObservatoryPanel === 'logs' ? 'is-active' : ''}
+                onClick={() => toggleObservatoryPanel('logs')}
+                aria-expanded={openObservatoryPanel === 'logs'}
+                aria-controls="observatory-logs"
+              >
+                Live logs
+              </button>
+              <button
+                type="button"
+                className={openObservatoryPanel === 'stack' ? 'is-active' : ''}
+                onClick={() => toggleObservatoryPanel('stack')}
+                aria-expanded={openObservatoryPanel === 'stack'}
+                aria-controls="observatory-stack"
+              >
+                Tech stack
+              </button>
+            </div>
+            <div
+              id="observatory-logs"
+              className={`observatory__console observatory__segment ${openObservatoryPanel === 'logs' ? 'is-mobile-open' : ''}`}
+            >
               <div className="console-panel terminal-panel">
                 <div className="console-panel__label">
                   <span>terminal / live.log</span>
@@ -168,7 +196,11 @@ const Header = () => {
                 ))}
               </div>
             </div>
-            <div className="observatory__stack-grid" aria-label={text.fullStack}>
+            <div
+              id="observatory-stack"
+              className={`observatory__stack-grid observatory__segment ${openObservatoryPanel === 'stack' ? 'is-mobile-open' : ''}`}
+              aria-label={text.fullStack}
+            >
               {stackDomains.map(({ id, items }) => (
                 <div className={`observatory__stack observatory__stack--${id}`} key={id}>
                   <strong>{text.domains[id]}</strong>
