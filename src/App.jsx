@@ -1,24 +1,40 @@
-import React, { useEffect, useState } from 'react'
+import React, { lazy, useEffect, useState } from 'react'
 import Header from './Components/header/Header'
 import Navbar from './Components/nav/Navbar'
 import About from './Components/about/About'
-import Experience from './Components/experience/Experience'
-import Portfolio from './Components/portfolio/Portfolio'
-import Services from './Components/services/Services'
-import CaseStudies from './Components/caseStudies/CaseStudies'
-import GithubProfile from './Components/github/GithubProfile'
-import Articles from './Components/articles/Articles'
-import Positions from './Components/positions/Positions'
 import CommandPalette from './Components/commandPalette/CommandPalette'
-import Contact from './Components/contact/Contact'
-import BusinessCard from './Components/business/BusinessCard'
 import Footer from './Components/footer/Footer'
 import BootLoader from './Components/ui/BootLoader'
+import DeferredSection from './Components/ui/DeferredSection'
 import './refresh.css'
+import './styles/tokens.css'
+import './styles/layout.css'
+import './styles/components.css'
+import './styles/responsive.css'
+
+const Experience = lazy(() => import('./Components/experience/Experience'))
+const Portfolio = lazy(() => import('./Components/portfolio/Portfolio'))
+const Services = lazy(() => import('./Components/services/Services'))
+const CaseStudies = lazy(() => import('./Components/caseStudies/CaseStudies'))
+const GithubProfile = lazy(() => import('./Components/github/GithubProfile'))
+const Articles = lazy(() => import('./Components/articles/Articles'))
+const Positions = lazy(() => import('./Components/positions/Positions'))
+const BusinessCard = lazy(() => import('./Components/business/BusinessCard'))
+const Contact = lazy(() => import('./Components/contact/Contact'))
 
 const App = () => {
   const [isBooting, setIsBooting] = useState(
-    () => !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    () => {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        return false
+      }
+
+      try {
+        return sessionStorage.getItem('portfolio-boot-seen') !== 'true'
+      } catch {
+        return true
+      }
+    }
   )
 
   useEffect(() => {
@@ -28,7 +44,14 @@ const App = () => {
 
     const previousOverflow = document.body.style.overflow
     document.body.style.overflow = 'hidden'
-    const timer = window.setTimeout(() => setIsBooting(false), 2200)
+    const timer = window.setTimeout(() => {
+      setIsBooting(false)
+      try {
+        sessionStorage.setItem('portfolio-boot-seen', 'true')
+      } catch {
+        // Storage can be unavailable in privacy-restricted browsing contexts.
+      }
+    }, 900)
 
     return () => {
       document.body.style.overflow = previousOverflow
@@ -39,10 +62,8 @@ const App = () => {
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
     const shouldReduce = mediaQuery.matches
-    const revealNodes = Array.from(document.querySelectorAll('[data-reveal]'))
-
     if (shouldReduce) {
-      revealNodes.forEach((node) => node.classList.add('is-visible'))
+      document.querySelectorAll('[data-reveal]').forEach((node) => node.classList.add('is-visible'))
       return
     }
 
@@ -62,77 +83,30 @@ const App = () => {
       }
     )
 
-    revealNodes.forEach((node) => observer.observe(node))
-
-    return () => observer.disconnect()
-  }, [])
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
-
-    if (mediaQuery.matches) {
-      return undefined
-    }
-
-    const interactiveSelector = [
-      '.observatory',
-      '.module-panel',
-      '.header__focus-module',
-      '.about__metric',
-      '.system-flow__path span',
-      '.portfolio_item',
-      '.service',
-      '.case-study-tab',
-      '.case-study-detail',
-      '.architecture-viewer',
-      '.profile-signal',
-      '.command-lab__shell',
-      '.github__repo',
-      '.experience_details',
-      '.article-card',
-      '.position_card',
-      '.business-card__container',
-      '.contact_option'
-    ].join(', ')
-    let animationFrame
-    let pointerEvent
-
-    const updatePointerLight = () => {
-      const panel = pointerEvent?.target.closest?.(interactiveSelector)
-
-      if (panel) {
-        const bounds = panel.getBoundingClientRect()
-        const pointerX = ((pointerEvent.clientX - bounds.left) / bounds.width) * 100
-        const pointerY = ((pointerEvent.clientY - bounds.top) / bounds.height) * 100
-        const tiltX = ((50 - pointerY) / 50) * 2.2
-        const tiltY = ((pointerX - 50) / 50) * 3.1
-
-        panel.style.setProperty('--pointer-x', `${pointerX}%`)
-        panel.style.setProperty('--pointer-y', `${pointerY}%`)
-        panel.style.setProperty('--tilt-x', `${tiltX}deg`)
-        panel.style.setProperty('--tilt-y', `${tiltY}deg`)
+    const observeRevealNodes = (root = document) => {
+      if (root instanceof Element && root.matches('[data-reveal]')) {
+        observer.observe(root)
       }
-
-      animationFrame = undefined
+      root.querySelectorAll?.('[data-reveal]').forEach((node) => observer.observe(node))
     }
 
-    const handlePointerMove = (event) => {
-      pointerEvent = event
+    observeRevealNodes()
 
-      if (!animationFrame) {
-        animationFrame = window.requestAnimationFrame(updatePointerLight)
-      }
-    }
+    const mutationObserver = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        mutation.addedNodes.forEach((node) => {
+          if (node instanceof Element) {
+            observeRevealNodes(node)
+          }
+        })
+      })
+    })
 
-    document.addEventListener('pointermove', handlePointerMove, { passive: true })
-    document.addEventListener('mousemove', handlePointerMove, { passive: true })
+    mutationObserver.observe(document.getElementById('main-content'), { childList: true, subtree: true })
 
     return () => {
-      document.removeEventListener('pointermove', handlePointerMove)
-      document.removeEventListener('mousemove', handlePointerMove)
-      if (animationFrame) {
-        window.cancelAnimationFrame(animationFrame)
-      }
+      observer.disconnect()
+      mutationObserver.disconnect()
     }
   }, [])
 
@@ -174,11 +148,10 @@ const App = () => {
   }, [])
 
   useEffect(() => {
-    const panels = Array.from(document.querySelectorAll('.module-panel'))
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
 
     if (mediaQuery.matches) {
-      panels.forEach((panel) => panel.classList.add('is-active', 'is-entered'))
+      document.querySelectorAll('.module-panel').forEach((panel) => panel.classList.add('is-active', 'is-entered'))
       return undefined
     }
 
@@ -198,9 +171,31 @@ const App = () => {
       }
     )
 
-    panels.forEach((panel) => observer.observe(panel))
+    const observePanels = (root = document) => {
+      if (root instanceof Element && root.matches('.module-panel')) {
+        observer.observe(root)
+      }
+      root.querySelectorAll?.('.module-panel').forEach((panel) => observer.observe(panel))
+    }
 
-    return () => observer.disconnect()
+    observePanels()
+
+    const mutationObserver = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        mutation.addedNodes.forEach((node) => {
+          if (node instanceof Element) {
+            observePanels(node)
+          }
+        })
+      })
+    })
+
+    mutationObserver.observe(document.getElementById('main-content'), { childList: true, subtree: true })
+
+    return () => {
+      observer.disconnect()
+      mutationObserver.disconnect()
+    }
   }, [])
 
   return (
@@ -216,16 +211,16 @@ const App = () => {
         <main id="main-content" tabIndex="-1">
           <Header />
           <CommandPalette />
+          <DeferredSection id="services"><Services /></DeferredSection>
+          <DeferredSection id="case-studies"><CaseStudies /></DeferredSection>
           <About />
-          <Experience />
-          <Portfolio />
-          <Services />
-          <CaseStudies />
-          <GithubProfile />
-          <Articles />
-          <Positions />
-          <BusinessCard />
-          <Contact />
+          <DeferredSection id="portfolio"><Portfolio /></DeferredSection>
+          <DeferredSection id="experience"><Experience /></DeferredSection>
+          <DeferredSection id="writing"><Articles /></DeferredSection>
+          <DeferredSection id="github"><GithubProfile /></DeferredSection>
+          <DeferredSection id="positions"><Positions /></DeferredSection>
+          <DeferredSection id="business-card"><BusinessCard /></DeferredSection>
+          <DeferredSection id="contact"><Contact /></DeferredSection>
         </main>
         <Footer />
       </div>

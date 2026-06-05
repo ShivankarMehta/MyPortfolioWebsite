@@ -36,6 +36,8 @@ body {
     var(--color-bg);
   color: var(--color-white);
   font-family: "Segoe UI", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 body::before {
@@ -132,6 +134,44 @@ section {
 
 section::after {
   display: none;
+}
+
+.deferred-section {
+  min-height: clamp(220px, 34vw, 430px);
+  padding: clamp(2.5rem, 4vw, 3.4rem) 0;
+  content-visibility: visible;
+  contain-intrinsic-size: auto;
+}
+
+.deferred-section__shell {
+  display: grid;
+  gap: 0.75rem;
+  min-height: clamp(180px, 28vw, 350px);
+  padding: clamp(1rem, 2vw, 1.35rem);
+  border: 1px solid rgba(72, 184, 255, 0.1);
+  border-radius: 0.85rem;
+  background: linear-gradient(145deg, rgba(8, 18, 31, 0.62), rgba(5, 12, 22, 0.52));
+}
+
+.deferred-section__shell span {
+  display: block;
+  height: 0.65rem;
+  max-width: 42rem;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(72, 184, 255, 0.08), rgba(18, 216, 160, 0.16), rgba(72, 184, 255, 0.08));
+}
+
+.deferred-section__shell span:nth-child(1) {
+  width: 11rem;
+}
+
+.deferred-section__shell span:nth-child(2) {
+  width: min(72%, 34rem);
+  height: 2.2rem;
+}
+
+.deferred-section__shell span:nth-child(3) {
+  width: min(92%, 48rem);
 }
 
 .section-heading {
@@ -369,7 +409,7 @@ header::after {
 }
 
 .site-shell.is-ready {
-  animation: siteWake 520ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: siteWake 340ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .site-boot {
@@ -393,7 +433,7 @@ header::after {
   position: absolute;
   inset: -30% 0;
   background: linear-gradient(180deg, transparent 45%, rgba(18, 216, 160, 0.075) 50%, transparent 55%);
-  animation: bootScan 1600ms linear infinite;
+  animation: bootScan 900ms linear infinite;
 }
 
 .site-boot__terminal {
@@ -484,7 +524,7 @@ header::after {
   transform: translateX(-100%);
   background: linear-gradient(90deg, var(--color-secondary), var(--color-primary));
   box-shadow: 0 0 18px rgba(18, 216, 160, 0.6);
-  animation: bootProgress 1700ms cubic-bezier(0.16, 1, 0.3, 1) 80ms forwards;
+  animation: bootProgress 760ms cubic-bezier(0.16, 1, 0.3, 1) 40ms forwards;
 }
 
 .site-boot__ready {
@@ -2839,10 +2879,12 @@ header::after {
 
 .portfolio_item li {
   position: relative;
+  min-width: 0;
   padding-left: 1.2rem;
   color: var(--color-light);
   font-size: 0.82rem;
   line-height: 1.45;
+  overflow-wrap: anywhere;
 }
 
 .portfolio_item li::before {
@@ -3034,6 +3076,85 @@ header::after {
   color: var(--color-primary);
   font-size: 0.85rem;
   font-weight: 600;
+}
+
+.module-panel--projects .services_container {
+  align-items: stretch;
+}
+
+.module-panel--projects .service {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.72rem !important;
+  min-width: 0;
+  height: 100%;
+  padding: 1rem !important;
+  overflow: hidden;
+}
+
+.module-panel--projects .service > * {
+  position: relative;
+  z-index: 2;
+  min-width: 0;
+}
+
+.module-panel--projects .service__media {
+  position: relative !important;
+  inset: auto !important;
+  flex: 0 0 auto;
+  width: 100% !important;
+  height: auto !important;
+  max-height: 240px;
+  margin: 0 0 0.15rem !important;
+  object-fit: contain;
+}
+
+.module-panel--projects .service__timeline {
+  position: static !important;
+  inset: auto !important;
+  order: 2;
+  align-self: flex-start;
+  max-width: 100%;
+  margin: 0 !important;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.module-panel--projects .service h3 {
+  order: 3;
+  margin: 0.12rem 0 0;
+  overflow-wrap: anywhere;
+}
+
+.module-panel--projects .service__stack {
+  order: 4;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.module-panel--projects .service__description {
+  order: 5;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.module-panel--projects .service__link {
+  position: relative !important;
+  inset: auto !important;
+  order: 6;
+  align-self: flex-start;
+  margin-top: auto;
+  padding: 0.58rem 0.75rem;
+  border: 1px solid rgba(var(--module-accent-rgb), 0.32);
+  border-radius: 0.5rem;
+  background: rgba(var(--module-accent-rgb), 0.1);
+  color: var(--module-accent);
+  line-height: 1;
+}
+
+.module-panel--projects .service__link:hover {
+  border-color: rgba(var(--module-accent-rgb), 0.58);
+  background: rgba(var(--module-accent-rgb), 0.17);
 }
 
 .command-lab {
@@ -5163,6 +5284,16 @@ html[data-theme="light"] .module-panel {
     repeating-linear-gradient(90deg, transparent 0 31px, rgba(var(--module-accent-rgb), 0.04) 32px);
   border-top-color: rgba(var(--module-accent-rgb), 0.42);
   border-left-color: rgba(var(--module-accent-rgb), 0.28);
+}
+
+html[data-theme="light"] .deferred-section__shell {
+  background: linear-gradient(145deg, #ffffff, #f7fbfc);
+  border-color: #dce9ec;
+  box-shadow: 0 8px 24px rgba(20, 46, 54, 0.04);
+}
+
+html[data-theme="light"] .deferred-section__shell span {
+  background: linear-gradient(90deg, #edf4f5, #d9efea, #edf4f5);
 }
 
 html[data-theme="light"] .module-panel.is-active {
@@ -7340,6 +7471,2028 @@ html[data-theme="light"] .business-card__frame {
   }
 }
 
+@media screen and (max-width: 700px), (update: slow) {
+  .module-panel,
+  .service,
+  .experience_details,
+  .position_card,
+  .portfolio_item,
+  .article-card,
+  .github__identity,
+  .github__metric,
+  .github__heatmap,
+  .github__languages,
+  .github__repos,
+  .business-card__container,
+  .contact_option,
+  .nav {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+
+  .module-panel *,
+  .observatory *,
+  .header__focus-module *,
+  .header_socials * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+
+  .module-panel:hover,
+  .service:hover,
+  .portfolio_item:hover,
+  .experience_details:hover,
+  .position_card:hover {
+    transform: none;
+  }
+}
+
+/* Formal presentation mode: motion communicates state, never decorates continuously. */
+:root {
+  --color-bg: #0b111a;
+  --color-bg-soft: #101925;
+  --color-surface: #111c28;
+  --color-surface-strong: #0e1722;
+  --color-primary: #46b6a1;
+  --color-primary-strong: #70cbb9;
+  --color-secondary: #6d9fc1;
+  --color-accent: #c9a96e;
+  --color-violet: #8290b3;
+  --color-white: #edf3f5;
+  --color-light: #b9c5ca;
+  --color-muted: #82939b;
+  --glass-border: 1px solid #263746;
+  --shadow-lg: 0 24px 55px rgba(0, 0, 0, 0.28);
+  --shadow-soft: 0 10px 26px rgba(0, 0, 0, 0.2);
+}
+
+body {
+  background: #0b111a;
+}
+
+body::before {
+  opacity: 0.12;
+  background-image:
+    linear-gradient(rgba(109, 159, 193, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(109, 159, 193, 0.08) 1px, transparent 1px);
+  background-size: 72px 72px;
+}
+
+body::after {
+  display: none;
+}
+
+.section-heading {
+  max-width: 840px;
+}
+
+.section-kicker,
+.header__eyebrow {
+  margin-bottom: 0.65rem;
+  color: var(--color-secondary);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+}
+
+.section-kicker::before,
+.header__eyebrow::before {
+  width: 1rem;
+  background: var(--color-primary);
+}
+
+.section-heading h2 {
+  font-size: clamp(2rem, 3.5vw, 2.8rem);
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+}
+
+.nav {
+  background: rgba(11, 17, 26, 0.96);
+  border-bottom-color: #263746;
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.2);
+}
+
+.nav::before {
+  display: none;
+}
+
+.nav::after {
+  height: 1px;
+  background: var(--color-primary);
+  box-shadow: none;
+}
+
+.nav__links a {
+  color: #9aa9b0;
+  font-size: 0.74rem;
+  letter-spacing: 0.09em;
+}
+
+.nav__links a::after {
+  height: 1px;
+  background: var(--color-primary);
+  box-shadow: none;
+}
+
+.nav__links a.active,
+.nav__links a:hover {
+  color: var(--color-white);
+}
+
+.nav__control {
+  border-color: #314454;
+  background: #101a25;
+  color: #b7c3c8;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.nav__control:hover {
+  border-color: #527b82;
+  background: #15242e;
+  color: var(--color-white);
+}
+
+.btn,
+.cta__button {
+  border-color: #34505b;
+  background: #111d28;
+  box-shadow: none;
+}
+
+.btn:hover,
+.cta__button:hover {
+  transform: none;
+  border-color: #5e8e8a;
+  box-shadow: none;
+}
+
+.btn-primary,
+.cta__button--primary,
+.nav__cta {
+  color: #07100e !important;
+  background: #67c8b5 !important;
+  border-color: #67c8b5 !important;
+  box-shadow: none !important;
+}
+
+.header__command,
+.header__availability,
+.header__role,
+.header__focus-module {
+  border-color: #263b49;
+  background: #101a25;
+  box-shadow: none;
+}
+
+.header__focus-module:hover {
+  transform: none;
+  border-color: #496675;
+  box-shadow: none;
+}
+
+.header__focus-module::before,
+.header__focus-module::after {
+  display: none;
+}
+
+.os-surface {
+  border: 1px solid #263746;
+  border-radius: 0.65rem;
+  background: #0f1924;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.16);
+}
+
+.os-surface::before,
+.os-surface::after,
+.module-panel::before,
+.module-panel::after {
+  display: none;
+}
+
+.os-windowbar {
+  margin-bottom: 1.4rem;
+  padding: 0 0 0.75rem;
+  border: 0;
+  border-bottom: 1px solid #263746;
+  border-radius: 0;
+  background: transparent;
+  color: #8798a0;
+}
+
+.os-windowbar__controls {
+  display: none;
+}
+
+.os-windowbar__module {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #93a4ab;
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 0.67rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.os-windowbar code {
+  color: #70828a;
+  font-size: 0.65rem;
+}
+
+.os-windowbar > span {
+  color: #799b92;
+  font-size: 0.65rem;
+}
+
+.os-windowbar > span i {
+  width: 0.32rem;
+  height: 0.32rem;
+  background: #6fae9f;
+}
+
+.module-panel,
+.module-panel--profile,
+.module-panel--skills,
+.module-panel--work,
+.module-panel--projects,
+.module-panel--cases,
+.module-panel--writing,
+.module-panel--github,
+.module-panel--records,
+.module-panel--identity,
+.module-panel--contact {
+  --module-accent: #6fae9f;
+  --module-accent-rgb: 111, 174, 159;
+  background: #0f1924;
+  border-color: #263746;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.16);
+}
+
+.service,
+.experience_details,
+.position_card,
+.portfolio_item,
+.article-card,
+.github__identity,
+.github__metric,
+.github__heatmap,
+.github__languages,
+.github__repos,
+.github__repo,
+.case-study-list,
+.case-study-detail,
+.architecture-viewer,
+.profile-matrix__command,
+.profile-matrix__filters,
+.profile-signal,
+.contact_option,
+form {
+  border-color: #283b49;
+  border-radius: 0.55rem;
+  background: #111d28;
+  background-image: none;
+  box-shadow: none;
+}
+
+.service:hover,
+.experience_details:hover,
+.position_card:hover,
+.portfolio_item:hover,
+.article-card:hover,
+.github__repo:hover,
+.contact_option:hover,
+.case-study-tab:hover,
+.case-study-tab.is-active {
+  border-color: #45616d;
+  background-color: #14222e;
+  box-shadow: none;
+}
+
+.service::before,
+.experience_details::before,
+.position_card::before,
+.article-card::before,
+.github__repo::before {
+  display: none;
+}
+
+.service__timeline,
+.architecture-chain span,
+.case-study-stack span,
+.profile-signal span,
+.contact_brief-services span {
+  border-color: #334b58;
+  border-radius: 0.35rem;
+  background: #152530;
+  color: #aebbc0;
+}
+
+.command-lab__shell,
+.command-lab__input,
+.command-lab__results button {
+  border-color: #283c49;
+  background: #101b26;
+  box-shadow: none;
+}
+
+.command-lab__head {
+  color: #8ca9b0;
+}
+
+.header_socials {
+  border-color: #334854;
+  background: #101a25;
+  box-shadow: none;
+}
+
+.footer__brand {
+  color: var(--color-white);
+}
+
+.footer__brand::before {
+  display: none;
+}
+
+.site-shell.is-ready *,
+.site-shell.is-ready *::before,
+.site-shell.is-ready *::after {
+  animation: none !important;
+}
+
+.site-shell.is-ready [data-reveal] {
+  transform: translateY(10px);
+  filter: none;
+  transition:
+    opacity 420ms ease var(--reveal-delay),
+    transform 420ms ease var(--reveal-delay);
+}
+
+.site-shell.is-ready [data-reveal].is-visible {
+  transform: none;
+}
+
+.module-panel {
+  background:
+    linear-gradient(180deg, rgba(8, 17, 29, 0.97), rgba(5, 13, 23, 0.94)),
+    repeating-linear-gradient(90deg, transparent 0 31px, rgba(var(--module-accent-rgb), 0.025) 32px);
+  box-shadow: 0 12px 30px rgba(0, 10, 20, 0.18);
+}
+
+.module-panel.is-active::before,
+.module-panel::after {
+  opacity: 0.45;
+}
+
+.module-panel:hover {
+  border-top-color: rgba(var(--module-accent-rgb), 0.5);
+  border-left-color: rgba(var(--module-accent-rgb), 0.38);
+  box-shadow: 0 15px 34px rgba(0, 10, 20, 0.22);
+}
+
+.module-panel .section-kicker::before,
+.os-windowbar__controls i:first-child,
+.os-windowbar > span i,
+.portfolio_item-node,
+.packet-row i,
+.header__availability > span {
+  box-shadow: none;
+}
+
+.service,
+.experience_details,
+.position_card,
+.portfolio_item,
+.article-card,
+.github__repo,
+.contact_option,
+.case-study-tab,
+.case-study-detail,
+.profile-signal {
+  box-shadow: 0 8px 22px rgba(0, 12, 24, 0.16);
+  transition:
+    border-color 180ms ease,
+    background-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.service:hover,
+.experience_details:hover,
+.position_card:hover,
+.portfolio_item:hover,
+.article-card:hover,
+.github__repo:hover,
+.contact_option:hover,
+.case-study-tab:hover,
+.case-study-tab.is-active {
+  transform: none;
+  box-shadow: 0 11px 26px rgba(0, 12, 24, 0.2);
+}
+
+.observatory__ring,
+.observatory__signal,
+.observatory__node,
+.fabric__packet,
+.architecture-orbit {
+  animation: none !important;
+}
+
+.nav,
+.service,
+.experience_details,
+.position_card,
+.article-card,
+.portfolio_item {
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+
+html[data-theme="light"] .module-panel {
+  background:
+    linear-gradient(180deg, #ffffff, #f8fbfb),
+    repeating-linear-gradient(90deg, transparent 0 31px, rgba(var(--module-accent-rgb), 0.025) 32px);
+  box-shadow: 0 8px 24px rgba(20, 46, 54, 0.055);
+}
+
+html[data-theme="light"] .module-panel:hover {
+  box-shadow: 0 11px 28px rgba(20, 46, 54, 0.075);
+}
+
+html[data-theme="light"] {
+  --color-bg: #f5f7f8;
+  --color-bg-soft: #eef2f3;
+  --color-surface: #ffffff;
+  --color-surface-strong: #ffffff;
+  --color-primary: #2f766a;
+  --color-primary-strong: #225d54;
+  --color-secondary: #55788d;
+  --color-accent: #806b45;
+  --color-violet: #68738c;
+  --color-white: #17262d;
+  --color-light: #455b64;
+  --color-muted: #687c84;
+  --glass-border: 1px solid #d7e0e3;
+  --shadow-lg: 0 20px 45px rgba(25, 44, 52, 0.1);
+  --shadow-soft: 0 8px 22px rgba(25, 44, 52, 0.065);
+}
+
+html[data-theme="light"] body {
+  background: #f5f7f8;
+}
+
+html[data-theme="light"] body::before {
+  opacity: 0.3;
+  background-image:
+    linear-gradient(rgba(85, 120, 141, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(85, 120, 141, 0.055) 1px, transparent 1px);
+}
+
+html[data-theme="light"] .os-surface,
+html[data-theme="light"] .module-panel,
+html[data-theme="light"] .module-panel--profile,
+html[data-theme="light"] .module-panel--skills,
+html[data-theme="light"] .module-panel--work,
+html[data-theme="light"] .module-panel--projects,
+html[data-theme="light"] .module-panel--cases,
+html[data-theme="light"] .module-panel--writing,
+html[data-theme="light"] .module-panel--github,
+html[data-theme="light"] .module-panel--records,
+html[data-theme="light"] .module-panel--identity,
+html[data-theme="light"] .module-panel--contact {
+  --module-accent: #3f746c;
+  --module-accent-rgb: 63, 116, 108;
+  border-color: #d4dfe2;
+  background: #ffffff;
+  box-shadow: 0 8px 22px rgba(25, 44, 52, 0.055);
+}
+
+html[data-theme="light"] .os-windowbar {
+  background: transparent;
+  border-color: #dbe4e7;
+}
+
+html[data-theme="light"] .service,
+html[data-theme="light"] .experience_details,
+html[data-theme="light"] .position_card,
+html[data-theme="light"] .portfolio_item,
+html[data-theme="light"] .article-card,
+html[data-theme="light"] .github__identity,
+html[data-theme="light"] .github__metric,
+html[data-theme="light"] .github__heatmap,
+html[data-theme="light"] .github__languages,
+html[data-theme="light"] .github__repos,
+html[data-theme="light"] .github__repo,
+html[data-theme="light"] .case-study-list,
+html[data-theme="light"] .case-study-detail,
+html[data-theme="light"] .architecture-viewer,
+html[data-theme="light"] .profile-matrix__command,
+html[data-theme="light"] .profile-matrix__filters,
+html[data-theme="light"] .profile-signal,
+html[data-theme="light"] .contact_option,
+html[data-theme="light"] form {
+  border-color: #d8e2e5;
+  background: #ffffff;
+  background-image: none;
+  box-shadow: none;
+}
+
+html[data-theme="light"] .nav {
+  background: rgba(255, 255, 255, 0.97);
+  border-color: #d7e0e3;
+  box-shadow: 0 4px 14px rgba(25, 44, 52, 0.06);
+}
+
+/* Formal portfolio visual system */
+:root {
+  --color-bg: #0b1118;
+  --color-bg-soft: #101821;
+  --color-surface: #111b25;
+  --color-surface-strong: #0f1821;
+  --color-primary: #58b7a8;
+  --color-primary-strong: #78c8bb;
+  --color-secondary: #7d9fb5;
+  --color-accent: #b7a272;
+  --color-violet: #8d9aaf;
+  --color-white: #edf2f4;
+  --color-light: #b6c1c6;
+  --color-muted: #7f9098;
+  --glass-border: 1px solid #263542;
+  --shadow-lg: 0 18px 42px rgba(0, 0, 0, 0.28);
+  --shadow-soft: 0 8px 22px rgba(0, 0, 0, 0.18);
+}
+
+body {
+  background: var(--color-bg);
+}
+
+body::before,
+body::after {
+  opacity: 0;
+}
+
+.module-panel--profile,
+.module-panel--skills,
+.module-panel--work,
+.module-panel--projects,
+.module-panel--cases,
+.module-panel--writing,
+.module-panel--github,
+.module-panel--records,
+.module-panel--identity,
+.module-panel--contact {
+  --module-accent: #58b7a8;
+  --module-accent-rgb: 88, 183, 168;
+}
+
+.os-surface,
+.module-panel {
+  border-color: #263542;
+  border-radius: 0.7rem;
+  background: linear-gradient(180deg, #111b25, #0f1821);
+  box-shadow: var(--shadow-soft);
+}
+
+.os-surface::before,
+.os-surface::after,
+.module-panel::before,
+.module-panel::after {
+  opacity: 0;
+}
+
+.module-panel:hover {
+  border-color: #344a58;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
+}
+
+.os-windowbar {
+  min-height: 2.8rem;
+  border-color: #263542;
+  background: #0e1720;
+}
+
+.os-windowbar__controls {
+  display: none;
+}
+
+.os-windowbar > span,
+.section-kicker,
+.section-kicker span {
+  color: var(--color-primary);
+  letter-spacing: 0.11em;
+}
+
+.section-kicker::after {
+  background: #344a58;
+  box-shadow: none;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  letter-spacing: -0.025em;
+}
+
+.nav {
+  border-color: #263542;
+  background: rgba(11, 17, 24, 0.97);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.22);
+}
+
+.nav::before {
+  display: none;
+}
+
+.nav::after {
+  height: 1px;
+  background: #58b7a8;
+  box-shadow: none;
+}
+
+.nav__links a,
+.nav__brand,
+.nav button {
+  letter-spacing: 0.06em;
+}
+
+.btn,
+button,
+.nav__cta,
+.article-card__action,
+.portfolio_item-cta {
+  border-radius: 0.5rem;
+  box-shadow: none;
+}
+
+.btn-primary,
+.nav__cta {
+  border-color: #58b7a8;
+  background: #58b7a8;
+  color: #081410;
+}
+
+.btn-primary:hover,
+.nav__cta:hover {
+  border-color: #78c8bb;
+  background: #78c8bb;
+  box-shadow: none;
+}
+
+.btn-secondary {
+  border-color: #344a58;
+  background: #111c26;
+  color: var(--color-white);
+}
+
+.header__focus-module,
+.about__metric,
+.system-flow,
+.experience_details,
+.portfolio_item,
+.service,
+.case-study-list,
+.case-study-detail,
+.architecture-viewer,
+.profile-matrix__command,
+.profile-matrix__filters,
+.profile-signal,
+.github__identity,
+.github__metric,
+.github__heatmap,
+.github__languages,
+.github__repos,
+.github__repo,
+.article-card,
+.article-reader,
+.position_card,
+.leetcode-card,
+.business-card__container,
+.contact_brief,
+.contact_option,
+form {
+  border-color: #293a47;
+  border-radius: 0.6rem;
+  background-color: #111b25;
+  background-image: none;
+  box-shadow: none;
+}
+
+.service:hover,
+.experience_details:hover,
+.position_card:hover,
+.portfolio_item:hover,
+.article-card:hover,
+.github__repo:hover,
+.contact_option:hover,
+.case-study-tab:hover,
+.case-study-tab.is-active {
+  border-color: #46645f;
+  background-color: #14212b;
+  box-shadow: none;
+}
+
+.observatory {
+  border-color: #293a47;
+  background: linear-gradient(180deg, #111c27, #0d1720);
+  box-shadow: var(--shadow-soft);
+}
+
+.observatory::before {
+  opacity: 0.12;
+}
+
+.service__timeline,
+.architecture-chain span,
+.case-study-stack span,
+.profile-signal span,
+.contact_brief-services span {
+  border-color: #344854;
+  background: #15232d;
+  color: #b6c1c6;
+}
+
+.module-panel p,
+.experience_details p,
+.portfolio_item p,
+.service p,
+.article-card p,
+.github__repo p,
+.position_card p {
+  color: var(--color-light);
+}
+
+html[data-theme="light"] {
+  --color-bg: #f3f5f6;
+  --color-bg-soft: #edf1f2;
+  --color-surface: #ffffff;
+  --color-surface-strong: #ffffff;
+  --color-primary: #2f756a;
+  --color-primary-strong: #225c54;
+  --color-secondary: #58788b;
+  --color-accent: #7d6d4b;
+  --color-violet: #68758a;
+  --color-white: #18262d;
+  --color-light: #465a63;
+  --color-muted: #6b7d85;
+  --glass-border: 1px solid #d6dfe2;
+  --shadow-lg: 0 18px 38px rgba(27, 43, 50, 0.09);
+  --shadow-soft: 0 7px 20px rgba(27, 43, 50, 0.055);
+}
+
+html[data-theme="light"] body::before,
+html[data-theme="light"] body::after {
+  opacity: 0;
+}
+
+html[data-theme="light"] .os-surface,
+html[data-theme="light"] .module-panel,
+html[data-theme="light"] .observatory,
+html[data-theme="light"] .header__focus-module,
+html[data-theme="light"] .about__metric,
+html[data-theme="light"] .system-flow,
+html[data-theme="light"] .experience_details,
+html[data-theme="light"] .portfolio_item,
+html[data-theme="light"] .service,
+html[data-theme="light"] .case-study-list,
+html[data-theme="light"] .case-study-detail,
+html[data-theme="light"] .architecture-viewer,
+html[data-theme="light"] .profile-matrix__command,
+html[data-theme="light"] .profile-matrix__filters,
+html[data-theme="light"] .profile-signal,
+html[data-theme="light"] .github__identity,
+html[data-theme="light"] .github__metric,
+html[data-theme="light"] .github__heatmap,
+html[data-theme="light"] .github__languages,
+html[data-theme="light"] .github__repos,
+html[data-theme="light"] .github__repo,
+html[data-theme="light"] .article-card,
+html[data-theme="light"] .article-reader,
+html[data-theme="light"] .position_card,
+html[data-theme="light"] .leetcode-card,
+html[data-theme="light"] .business-card__container,
+html[data-theme="light"] .contact_brief,
+html[data-theme="light"] .contact_option,
+html[data-theme="light"] form {
+  border-color: #d6dfe2;
+  background: #ffffff;
+  background-image: none;
+  box-shadow: var(--shadow-soft);
+}
+
+html[data-theme="light"] .os-windowbar {
+  border-color: #dce4e6;
+  background: #f8fafb;
+}
+
+html[data-theme="light"] .btn-secondary {
+  border-color: #ccd8dc;
+  background: #ffffff;
+  color: #18262d;
+}
+
+html[data-theme="light"] .service:hover,
+html[data-theme="light"] .experience_details:hover,
+html[data-theme="light"] .position_card:hover,
+html[data-theme="light"] .portfolio_item:hover,
+html[data-theme="light"] .article-card:hover,
+html[data-theme="light"] .github__repo:hover,
+html[data-theme="light"] .contact_option:hover {
+  border-color: #9dbbb5;
+  background: #fbfdfd;
+  box-shadow: 0 9px 24px rgba(27, 43, 50, 0.075);
+}
+
+html[data-theme="light"] #about,
+html[data-theme="light"] #services,
+html[data-theme="light"] #github,
+html[data-theme="light"] #positions,
+html[data-theme="light"] #business-card {
+  background: #f3f5f6 !important;
+}
+
+html[data-theme="light"] #portfolio,
+html[data-theme="light"] #experience,
+html[data-theme="light"] #writing,
+html[data-theme="light"] #contact {
+  border-color: #dce3e5;
+  background: #edf1f2 !important;
+}
+
+html[data-theme="light"] #positions::before,
+html[data-theme="light"] #positions::after {
+  display: none;
+}
+
+/* Systems Observatory: Microsoft Admin-inspired operations overview */
+.observatory,
+.observatory button,
+.observatory code {
+  font-family: "Segoe UI Variable", "Segoe UI", Arial, sans-serif;
+}
+
+.observatory {
+  border: 1px solid #314252;
+  border-radius: 0.45rem;
+  background: #101820;
+  color: #e6edf1;
+  overflow: hidden;
+}
+
+.observatory::before,
+.observatory::after {
+  display: none;
+}
+
+.observatory__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 4.25rem;
+  padding: 0.8rem 1rem;
+  border-bottom: 1px solid #314252;
+  background: #151f29;
+}
+
+.observatory__header-copy,
+.observatory__header-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.24rem;
+}
+
+.observatory__header-copy span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #eef3f5;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.observatory__header-copy span i {
+  width: 0.42rem;
+  height: 0.42rem;
+  border-radius: 50%;
+  background: #58b7a8;
+  box-shadow: none;
+}
+
+.observatory__header-copy small,
+.observatory__header-meta small {
+  color: #91a1aa;
+  font-size: 0.68rem;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.observatory__header-meta {
+  align-items: flex-end;
+}
+
+.observatory__header-meta strong {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: #84cdbf;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.observatory__header-meta strong i {
+  width: 0.38rem;
+  height: 0.38rem;
+  border-radius: 50%;
+  background: #58b7a8;
+}
+
+.observatory__stage {
+  display: grid;
+  grid-template-columns: minmax(210px, 1.25fr) repeat(2, minmax(120px, 0.75fr));
+  gap: 0.7rem;
+  min-height: 0;
+  padding: 0.85rem;
+  background: #101820;
+}
+
+.observatory__fabric,
+.observatory__ring,
+.observatory__signal,
+.observatory__stage::before,
+.observatory__stage::after {
+  display: none;
+}
+
+.observatory .header__halo {
+  position: relative;
+  grid-column: 1;
+  grid-row: 1 / span 3;
+  top: auto;
+  left: auto;
+  z-index: 1;
+  width: 100%;
+  min-height: 100%;
+  aspect-ratio: auto;
+  padding: 0;
+  border: 1px solid #314252;
+  border-radius: 0.35rem;
+  background: #17232d;
+  box-shadow: none;
+  transform: none;
+}
+
+.observatory .header__halo::after {
+  content: "Shivankar Mehta  ·  Software Developer & System Engineer";
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0.7rem 0.8rem;
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 0;
+  background: rgba(15, 24, 33, 0.92);
+  color: #edf2f4;
+  font: 600 0.68rem/1.35 "Segoe UI Variable", "Segoe UI", Arial, sans-serif;
+  letter-spacing: 0;
+}
+
+.observatory .header__image {
+  width: 100%;
+  height: 100%;
+  border-radius: 0.3rem;
+}
+
+.observatory .header__image::before {
+  background: linear-gradient(180deg, transparent 55%, rgba(9, 16, 23, 0.58));
+  opacity: 1;
+}
+
+.observatory .header__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 18%;
+}
+
+.observatory__node {
+  position: static;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 0;
+  min-height: 5.4rem;
+  padding: 0.72rem;
+  border: 1px solid #314252;
+  border-radius: 0.35rem;
+  background: #17232d;
+  color: #dce6ea;
+  font: 600 0.72rem/1.3 "Segoe UI Variable", "Segoe UI", Arial, sans-serif;
+  letter-spacing: 0;
+  text-align: left;
+  transform: none;
+  transition: border-color 160ms ease, background-color 160ms ease;
+}
+
+.observatory__node::before {
+  content: "Capability";
+  color: #81949e;
+  font-size: 0.58rem;
+  font-weight: 500;
+}
+
+.observatory__node::after {
+  display: none;
+}
+
+.observatory__node:hover {
+  transform: none;
+  border-color: #5c798b;
+  background: #1a2934;
+}
+
+.observatory__node small {
+  color: #8fc4ba;
+  font: 500 0.66rem/1.3 "Segoe UI Variable", "Segoe UI", Arial, sans-serif;
+  text-align: left;
+}
+
+.observatory__console {
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 0.7rem;
+  margin: 0;
+  padding: 0 0.85rem 0.85rem;
+}
+
+.console-panel {
+  padding: 0;
+  border: 1px solid #314252;
+  border-radius: 0.35rem;
+  background: #151f29;
+  overflow: hidden;
+}
+
+.console-panel__label {
+  margin: 0;
+  padding: 0.62rem 0.7rem;
+  border-bottom: 1px solid #314252;
+  color: #e4ecef;
+  font: 600 0.68rem "Segoe UI Variable", "Segoe UI", Arial, sans-serif;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.console-panel__label small {
+  color: #8fc4ba;
+  font-size: 0.62rem;
+  font-weight: 500;
+}
+
+.terminal-panel p {
+  margin: 0;
+  padding: 0.38rem 0.7rem;
+  border-bottom: 1px solid rgba(49, 66, 82, 0.48);
+  color: #b9c5cb;
+  font: 0.62rem/1.4 "Segoe UI Variable", "Segoe UI", Arial, sans-serif;
+  white-space: normal;
+}
+
+.terminal-panel p:last-child {
+  border-bottom: 0;
+}
+
+.terminal-panel p small {
+  min-width: 1.2rem;
+  color: #6da9cf;
+}
+
+.terminal-panel .console__prompt {
+  display: none;
+}
+
+.packet-row {
+  grid-template-columns: 0.42rem 1fr auto auto;
+  gap: 0.45rem;
+  margin: 0;
+  padding: 0.42rem 0.7rem;
+  border-bottom: 1px solid rgba(49, 66, 82, 0.48);
+  font: 0.61rem "Segoe UI Variable", "Segoe UI", Arial, sans-serif;
+}
+
+.packet-row:last-child {
+  border-bottom: 0;
+}
+
+.packet-row > i {
+  width: 0.36rem;
+  height: 0.36rem;
+  background: #58b7a8;
+  box-shadow: none;
+}
+
+.packet-row code {
+  color: #c4d0d5;
+  font-family: "Segoe UI Variable", "Segoe UI", Arial, sans-serif;
+}
+
+.packet-row small {
+  color: #7e9fb5;
+}
+
+.packet-row strong {
+  border-radius: 0.2rem;
+  background: rgba(88, 183, 168, 0.12);
+  color: #84cdbf;
+  font-weight: 600;
+}
+
+.observatory__stack-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.7rem;
+  margin: 0;
+  padding: 0 0.85rem 0.85rem;
+}
+
+.observatory__stack {
+  min-height: 5.2rem;
+  padding: 0.7rem;
+  border: 1px solid #314252;
+  border-radius: 0.35rem;
+  background: #151f29;
+}
+
+.observatory__stack:hover {
+  transform: none;
+  border-color: #5c798b;
+  background: #182630;
+}
+
+.observatory__stack strong,
+.observatory__stack--ai strong {
+  margin-bottom: 0.35rem;
+  color: #dce6ea;
+  font: 600 0.66rem "Segoe UI Variable", "Segoe UI", Arial, sans-serif;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.observatory__stack p {
+  color: #91a1aa;
+  font: 0.6rem/1.45 "Segoe UI Variable", "Segoe UI", Arial, sans-serif;
+}
+
+.observatory__footer {
+  padding: 0.7rem 0.85rem;
+  border-top: 1px solid #314252;
+  background: #151f29;
+  color: #91a1aa;
+  font: 0.62rem "Segoe UI Variable", "Segoe UI", Arial, sans-serif;
+}
+
+.observatory__footer strong {
+  color: #c4d0d5;
+  font-weight: 600;
+}
+
+html[data-theme="light"] .observatory {
+  border-color: #c8d1d7;
+  background: #f5f7f8;
+  color: #202b33;
+}
+
+html[data-theme="light"] .observatory__header,
+html[data-theme="light"] .observatory__footer,
+html[data-theme="light"] .console-panel,
+html[data-theme="light"] .observatory__stack {
+  border-color: #d4dce1;
+  background: #ffffff;
+}
+
+html[data-theme="light"] .observatory__stage {
+  background: #f5f7f8;
+}
+
+html[data-theme="light"] .observatory .header__halo,
+html[data-theme="light"] .observatory__node {
+  border-color: #d4dce1;
+  background: #ffffff;
+  box-shadow: none;
+}
+
+html[data-theme="light"] .observatory__header-copy span,
+html[data-theme="light"] .observatory__node,
+html[data-theme="light"] .console-panel__label,
+html[data-theme="light"] .observatory__stack strong {
+  color: #202b33;
+}
+
+html[data-theme="light"] .observatory__header-copy small,
+html[data-theme="light"] .observatory__header-meta small,
+html[data-theme="light"] .observatory__node::before,
+html[data-theme="light"] .observatory__stack p,
+html[data-theme="light"] .observatory__footer {
+  color: #667782;
+}
+
+html[data-theme="light"] .terminal-panel p,
+html[data-theme="light"] .packet-row,
+html[data-theme="light"] .console-panel__label,
+html[data-theme="light"] .observatory__footer {
+  border-color: #e0e6e9;
+}
+
+html[data-theme="light"] .terminal-panel p,
+html[data-theme="light"] .packet-row code {
+  color: #4c5d67;
+}
+
+@media screen and (max-width: 760px) {
+  .observatory__header {
+    align-items: flex-start;
+  }
+
+  .observatory__stage {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .observatory .header__halo {
+    grid-column: 1 / -1;
+    grid-row: auto;
+    min-height: 320px;
+  }
+
+  .observatory__node {
+    display: flex;
+    min-height: 4.7rem;
+  }
+
+  .observatory__console {
+    grid-template-columns: 1fr;
+  }
+
+  .observatory__stack-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .observatory__footer {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media screen and (max-width: 430px) {
+  .observatory__header-meta {
+    display: none;
+  }
+
+  .observatory__stage,
+  .observatory__stack-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .observatory .header__halo {
+    min-height: 290px;
+  }
+}
+
+/* Compact portfolio rhythm */
+section,
+#about,
+#experience,
+#portfolio,
+#services,
+#case-studies,
+#github,
+#writing,
+#positions,
+#business-card,
+#contact {
+  padding-top: clamp(2.6rem, 4vw, 4rem);
+  padding-bottom: clamp(2.6rem, 4vw, 4rem);
+}
+
+.deferred-section {
+  min-height: clamp(130px, 18vw, 220px);
+  padding: clamp(1.5rem, 2.5vw, 2.5rem) 0;
+}
+
+.deferred-section__shell {
+  min-height: clamp(110px, 15vw, 190px);
+}
+
+.os-windowbar {
+  margin-bottom: clamp(1rem, 2vw, 1.6rem);
+}
+
+.section-heading,
+.os-surface > .section-heading {
+  margin-bottom: clamp(1.35rem, 2.5vw, 2.2rem);
+}
+
+.experience_container,
+.portfolio_container,
+.services_container,
+.positions_container,
+.articles__grid,
+.github__repos,
+.profile-matrix__grid,
+.contact__container {
+  gap: clamp(0.75rem, 1.5vw, 1.25rem);
+}
+
+.profile-matrix,
+.leetcode-card,
+.business-card__shell,
+.contact_brief {
+  margin-top: clamp(1.25rem, 2.5vw, 2rem);
+}
+
+.observatory__stage,
+.observatory__console,
+.observatory__stack-grid {
+  gap: 0.55rem;
+}
+
+@media screen and (max-width: 760px) {
+  section,
+  #about,
+  #experience,
+  #portfolio,
+  #services,
+  #case-studies,
+  #github,
+  #writing,
+  #positions,
+  #business-card,
+  #contact {
+    padding-top: 2.15rem;
+    padding-bottom: 2.15rem;
+  }
+
+  .deferred-section {
+    min-height: 100px;
+    padding: 1.25rem 0;
+  }
+
+  .deferred-section__shell {
+    min-height: 88px;
+  }
+
+  .section-heading,
+  .os-surface > .section-heading {
+    margin-bottom: 1.2rem;
+  }
+}
+
+/* Microsoft Fluent-inspired portfolio system */
+:root {
+  --color-bg: #0b1420;
+  --color-bg-soft: #101c2a;
+  --color-surface: #142235;
+  --color-surface-strong: #192a40;
+  --color-primary: #4fa3e3;
+  --color-primary-strong: #79bced;
+  --color-secondary: #90bddb;
+  --color-accent: #d2a106;
+  --color-violet: #a98eda;
+  --color-white: #f5f5f5;
+  --color-light: #d2d0ce;
+  --color-muted: #a19f9d;
+  --glass-border: 1px solid #344a61;
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.32);
+  --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.24);
+  --terminal: "Cascadia Code", Consolas, monospace;
+}
+
+html,
+body,
+button,
+input,
+textarea,
+select {
+  font-family: "Segoe UI Variable", "Segoe UI", Arial, sans-serif;
+}
+
+body {
+  background: #0b1420;
+  color: #f5f5f5;
+  font-size: 1rem;
+}
+
+body::before,
+body::after {
+  display: none;
+}
+
+p {
+  color: #d2d0ce;
+  line-height: 1.65;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #f5f5f5;
+  font-family: "Segoe UI Variable", "Segoe UI", Arial, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+}
+
+code,
+pre,
+.header__command,
+.command-lab__input,
+.command-lab__shell {
+  font-family: var(--terminal);
+}
+
+.nav {
+  min-height: 3.5rem;
+  border-bottom: 1px solid #344a61;
+  background: rgba(14, 25, 39, 0.98);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.28);
+}
+
+.nav::after {
+  display: none;
+}
+
+.nav__brand {
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.nav__links a {
+  padding: 1rem 0.15rem;
+  color: #d2d0ce;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: none;
+}
+
+.nav__links a::after {
+  height: 2px;
+  background: #4f9bd8;
+}
+
+.nav__links a.active,
+.nav__links a:hover {
+  color: #ffffff;
+}
+
+.nav__control,
+.nav__toggle {
+  min-height: 2.25rem;
+  border: 1px solid #526a82;
+  border-radius: 0.15rem;
+  background: transparent;
+  color: #f5f5f5;
+}
+
+.nav__control:hover,
+.nav__toggle:hover {
+  border-color: #7892aa;
+  background: #1d3148;
+}
+
+.btn,
+.cta__button,
+.nav__cta,
+.article-card__action,
+.service__link,
+.portfolio_item-cta {
+  min-height: 2.75rem;
+  border: 2px solid transparent;
+  border-radius: 0.125rem;
+  padding: 0.65rem 1.25rem;
+  font-family: "Segoe UI Variable", "Segoe UI", Arial, sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  box-shadow: none;
+}
+
+.btn-primary,
+.cta__button--primary,
+.nav__cta {
+  border-color: #4f9bd8 !important;
+  background: #4f9bd8 !important;
+  color: #11100f !important;
+}
+
+.btn-primary:hover,
+.cta__button--primary:hover,
+.nav__cta:hover {
+  border-color: #75b6e8 !important;
+  background: #75b6e8 !important;
+}
+
+.btn-secondary,
+.cta__button--secondary {
+  border-color: #d2d0ce;
+  background: transparent;
+  color: #ffffff;
+}
+
+.btn-secondary:hover,
+.cta__button--secondary:hover {
+  border-color: #ffffff;
+  background: #1d3148;
+}
+
+.cta__button-icon {
+  border-radius: 0.125rem;
+  background: rgba(79, 155, 216, 0.14);
+  color: #75b6e8;
+}
+
+.section-kicker,
+.header__eyebrow {
+  color: #75b6e8;
+  font-family: "Segoe UI Variable", "Segoe UI", Arial, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.section-kicker::before,
+.header__eyebrow::before {
+  background: #4f9bd8;
+}
+
+.section-heading h2 {
+  font-weight: 600;
+  letter-spacing: -0.055em;
+}
+
+.os-windowbar {
+  border-bottom: 1px solid #344a61;
+  background: transparent;
+}
+
+.os-windowbar__module,
+.os-windowbar code,
+.os-windowbar > span {
+  color: #a19f9d;
+  font-family: "Segoe UI Variable", "Segoe UI", Arial, sans-serif;
+  letter-spacing: 0.04em;
+}
+
+.os-windowbar__module {
+  color: #75b6e8;
+  font-weight: 600;
+}
+
+.module-panel,
+.os-surface {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.header__focus-module,
+.about__metric,
+.system-flow,
+.experience_details,
+.portfolio_item,
+.service,
+.case-study-list,
+.case-study-detail,
+.architecture-viewer,
+.profile-matrix__command,
+.profile-matrix__filters,
+.profile-signal,
+.github__identity,
+.github__metric,
+.github__heatmap,
+.github__languages,
+.github__repos,
+.github__repo,
+.article-card,
+.article-reader,
+.position_card,
+.leetcode-card,
+.business-card__container,
+.contact_brief,
+.contact_option,
+form {
+  border: 1px solid #344a61;
+  border-radius: 0.25rem;
+  background: #142235;
+  background-image: none;
+  box-shadow: var(--shadow-soft);
+}
+
+.service:hover,
+.experience_details:hover,
+.position_card:hover,
+.portfolio_item:hover,
+.article-card:hover,
+.github__repo:hover,
+.contact_option:hover,
+.case-study-tab:hover,
+.case-study-tab.is-active,
+.profile-signal:hover {
+  transform: none;
+  border-color: #797775;
+  background: #192a40;
+  box-shadow: var(--shadow-soft);
+}
+
+.service__timeline,
+.architecture-chain span,
+.case-study-stack span,
+.profile-signal span,
+.contact_brief-services span,
+.experience_details-list li {
+  border-color: #605e5c;
+  border-radius: 0.125rem;
+  background: #192a40;
+  color: #d2d0ce;
+}
+
+.service h3,
+.portfolio_item h3,
+.experience_details h3,
+.article-card h3,
+.github__repo h3,
+.position_card h3 {
+  color: #ffffff;
+  font-family: "Segoe UI Variable", "Segoe UI", Arial, sans-serif;
+  font-weight: 600;
+}
+
+.service__stack,
+.portfolio_item-meta,
+.portfolio_item-location,
+.experience_details-header small {
+  color: #8cb8d8;
+  font-family: "Segoe UI Variable", "Segoe UI", Arial, sans-serif;
+  letter-spacing: 0.02em;
+}
+
+.header__role,
+.header__availability {
+  border-color: #344a61;
+  border-radius: 0.125rem;
+  background: transparent;
+}
+
+.header__role-title,
+.header__role-company {
+  font-family: "Segoe UI Variable", "Segoe UI", Arial, sans-serif;
+  letter-spacing: 0.04em;
+  text-transform: none;
+}
+
+.header_socials {
+  border-color: #526a82;
+  border-radius: 0.25rem;
+  background: #142235;
+  box-shadow: var(--shadow-soft);
+}
+
+.header_socials a:hover {
+  background: #1d3148;
+  color: #75b6e8;
+}
+
+.observatory {
+  border-color: #344a61;
+  border-radius: 0.25rem;
+  background: #142235;
+}
+
+.observatory__header,
+.observatory__footer,
+.console-panel,
+.observatory__stack,
+.observatory__node,
+.observatory .header__halo {
+  border-color: #344a61;
+  border-radius: 0.125rem;
+  background: #192a40;
+}
+
+.observatory__stage {
+  background: #142235;
+}
+
+.observatory__header-copy span,
+.console-panel__label,
+.observatory__stack strong,
+.observatory__node {
+  color: #f5f5f5;
+}
+
+.observatory__header-copy small,
+.observatory__header-meta small,
+.observatory__node::before,
+.observatory__stack p,
+.observatory__footer {
+  color: #a19f9d;
+}
+
+.observatory__header-meta strong,
+.observatory__node small,
+.packet-row strong {
+  color: #75b6e8;
+}
+
+.observatory__header-copy span i,
+.observatory__header-meta strong i,
+.packet-row > i {
+  background: #6ccb5f;
+}
+
+footer {
+  border-top: 1px solid #344a61;
+  background: #0e1927 !important;
+}
+
+html[data-theme="light"] {
+  --color-bg: #ffffff;
+  --color-bg-soft: #f5f5f5;
+  --color-surface: #ffffff;
+  --color-surface-strong: #ffffff;
+  --color-primary: #0067b8;
+  --color-primary-strong: #005a9e;
+  --color-secondary: #3a96dd;
+  --color-accent: #8a6d00;
+  --color-violet: #5c2d91;
+  --color-white: #1b1a19;
+  --color-light: #323130;
+  --color-muted: #605e5c;
+  --glass-border: 1px solid #d2d0ce;
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+html[data-theme="light"] body,
+html[data-theme="light"] header,
+html[data-theme="light"] #about,
+html[data-theme="light"] #experience,
+html[data-theme="light"] #portfolio,
+html[data-theme="light"] #services,
+html[data-theme="light"] #github,
+html[data-theme="light"] #writing,
+html[data-theme="light"] #positions,
+html[data-theme="light"] #business-card,
+html[data-theme="light"] #contact {
+  background: #ffffff !important;
+  color: #1b1a19;
+}
+
+html[data-theme="light"] p {
+  color: #323130;
+}
+
+html[data-theme="light"] h1,
+html[data-theme="light"] h2,
+html[data-theme="light"] h3,
+html[data-theme="light"] h4,
+html[data-theme="light"] h5,
+html[data-theme="light"] h6 {
+  color: #1b1a19;
+}
+
+html[data-theme="light"] .nav,
+html[data-theme="light"] footer {
+  border-color: #d2d0ce;
+  background: #ffffff !important;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+html[data-theme="light"] .nav__brand,
+html[data-theme="light"] .nav__links a.active,
+html[data-theme="light"] .nav__links a:hover {
+  color: #1b1a19;
+}
+
+html[data-theme="light"] .nav__links a {
+  color: #323130;
+}
+
+html[data-theme="light"] .nav__control,
+html[data-theme="light"] .nav__toggle {
+  border-color: #8a8886;
+  background: #ffffff;
+  color: #1b1a19;
+}
+
+html[data-theme="light"] .btn-primary,
+html[data-theme="light"] .cta__button--primary,
+html[data-theme="light"] .nav__cta {
+  border-color: #0067b8 !important;
+  background: #0067b8 !important;
+  color: #ffffff !important;
+}
+
+html[data-theme="light"] .btn-primary:hover,
+html[data-theme="light"] .cta__button--primary:hover,
+html[data-theme="light"] .nav__cta:hover {
+  border-color: #005a9e !important;
+  background: #005a9e !important;
+}
+
+html[data-theme="light"] .btn-secondary,
+html[data-theme="light"] .cta__button--secondary {
+  border-color: #1b1a19;
+  color: #1b1a19;
+}
+
+html[data-theme="light"] .module-panel,
+html[data-theme="light"] .os-surface {
+  background: transparent;
+  box-shadow: none;
+}
+
+html[data-theme="light"] .header__focus-module,
+html[data-theme="light"] .about__metric,
+html[data-theme="light"] .system-flow,
+html[data-theme="light"] .experience_details,
+html[data-theme="light"] .portfolio_item,
+html[data-theme="light"] .service,
+html[data-theme="light"] .case-study-list,
+html[data-theme="light"] .case-study-detail,
+html[data-theme="light"] .architecture-viewer,
+html[data-theme="light"] .profile-matrix__command,
+html[data-theme="light"] .profile-matrix__filters,
+html[data-theme="light"] .profile-signal,
+html[data-theme="light"] .github__identity,
+html[data-theme="light"] .github__metric,
+html[data-theme="light"] .github__heatmap,
+html[data-theme="light"] .github__languages,
+html[data-theme="light"] .github__repos,
+html[data-theme="light"] .github__repo,
+html[data-theme="light"] .article-card,
+html[data-theme="light"] .article-reader,
+html[data-theme="light"] .position_card,
+html[data-theme="light"] .leetcode-card,
+html[data-theme="light"] .business-card__container,
+html[data-theme="light"] .contact_brief,
+html[data-theme="light"] .contact_option,
+html[data-theme="light"] form,
+html[data-theme="light"] .observatory,
+html[data-theme="light"] .observatory__header,
+html[data-theme="light"] .observatory__footer,
+html[data-theme="light"] .console-panel,
+html[data-theme="light"] .observatory__stack,
+html[data-theme="light"] .observatory__node,
+html[data-theme="light"] .observatory .header__halo {
+  border-color: #d2d0ce;
+  background: #ffffff;
+  box-shadow: var(--shadow-soft);
+}
+
+html[data-theme="light"] .observatory__stage {
+  background: #f5f5f5;
+}
+
+html[data-theme="light"] .service:hover,
+html[data-theme="light"] .experience_details:hover,
+html[data-theme="light"] .position_card:hover,
+html[data-theme="light"] .portfolio_item:hover,
+html[data-theme="light"] .article-card:hover,
+html[data-theme="light"] .github__repo:hover,
+html[data-theme="light"] .contact_option:hover,
+html[data-theme="light"] .profile-signal:hover {
+  border-color: #8a8886;
+  background: #f5f5f5;
+}
+
+html[data-theme="light"] .service__timeline,
+html[data-theme="light"] .architecture-chain span,
+html[data-theme="light"] .case-study-stack span,
+html[data-theme="light"] .profile-signal span,
+html[data-theme="light"] .contact_brief-services span,
+html[data-theme="light"] .experience_details-list li {
+  border-color: #d2d0ce;
+  background: #f5f5f5;
+  color: #323130;
+}
+
+html[data-theme="light"] .section-kicker,
+html[data-theme="light"] .header__eyebrow,
+html[data-theme="light"] .os-windowbar__module,
+html[data-theme="light"] .service__stack,
+html[data-theme="light"] .portfolio_item-meta,
+html[data-theme="light"] .portfolio_item-location,
+html[data-theme="light"] .experience_details-header small {
+  color: #0067b8;
+}
+
+html[data-theme="light"] .module-panel--work .portfolio_item {
+  border-color: #d2d0ce;
+  background: #ffffff;
+  background-image: none;
+}
+
+html[data-theme="light"] .module-panel--work .portfolio_item-header {
+  border-color: #d2d0ce;
+  background: #f5f5f5;
+  background-image: none;
+}
+
+html[data-theme="light"] .module-panel--work .portfolio_item-header::before,
+html[data-theme="light"] .module-panel--work .portfolio_item-meta,
+html[data-theme="light"] .module-panel--work .portfolio_item-location {
+  color: #0067b8;
+}
+
+html[data-theme="light"] .module-panel--work .portfolio_item-header h3,
+html[data-theme="light"] .module-panel--work .portfolio_item-company {
+  color: #1b1a19;
+}
+
+html[data-theme="light"] .module-panel--work .portfolio_item li {
+  color: #323130;
+}
+
+html[data-theme="light"] .module-panel--work .portfolio_item-image {
+  border-color: #d2d0ce;
+  background: #ffffff !important;
+  filter: none;
+}
+
+@media screen and (max-width: 760px) {
+  .module-panel--work .portfolio_item {
+    gap: 0.8rem;
+    padding: 0.75rem;
+  }
+
+  .module-panel--work .portfolio_item-header {
+    grid-template-columns: minmax(110px, 0.42fr) minmax(0, 1fr);
+    padding: 0.7rem;
+    gap: 0.24rem 0.8rem;
+  }
+
+  .module-panel--work .portfolio_item-image {
+    align-self: start;
+    max-height: 120px;
+  }
+}
+
+@media screen and (max-width: 430px) {
+  .module-panel--work .portfolio_item-header {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "media"
+      "process"
+      "date"
+      "title"
+      "company"
+      "location";
+  }
+
+  .module-panel--work .portfolio_item-image {
+    width: 100%;
+    max-height: none;
+  }
+}
+
+html[data-theme="light"] main,
+html[data-theme="light"] .site-shell,
+html[data-theme="light"] .deferred-section,
+html[data-theme="light"] #main-content {
+  background: #ffffff !important;
+}
+
+html[data-theme="light"] #home::before,
+html[data-theme="light"] #home::after,
+html[data-theme="light"] #about::before,
+html[data-theme="light"] #about::after,
+html[data-theme="light"] #experience::before,
+html[data-theme="light"] #experience::after,
+html[data-theme="light"] #portfolio::before,
+html[data-theme="light"] #portfolio::after,
+html[data-theme="light"] #services::before,
+html[data-theme="light"] #services::after,
+html[data-theme="light"] #case-studies::before,
+html[data-theme="light"] #case-studies::after,
+html[data-theme="light"] #github::before,
+html[data-theme="light"] #github::after,
+html[data-theme="light"] #writing::before,
+html[data-theme="light"] #writing::after,
+html[data-theme="light"] #positions::before,
+html[data-theme="light"] #positions::after,
+html[data-theme="light"] #business-card::before,
+html[data-theme="light"] #business-card::after,
+html[data-theme="light"] #contact::before,
+html[data-theme="light"] #contact::after {
+  display: none !important;
+  background: transparent !important;
+  opacity: 0 !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -7347,6 +9500,12 @@ html[data-theme="light"] .business-card__frame {
     animation: none !important;
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
+  }
+
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
   }
 
   .site-boot {

@@ -27,6 +27,11 @@ const About = () => {
             </article>
           ))}
         </div>
+        <aside className="credibility-strip" data-reveal="fade-up" aria-label="Professional credibility">
+          <div><strong>Production ownership</strong><span>Architecture, implementation, deployment, and operational support</span></div>
+          <div><strong>Enterprise delivery</strong><span>Systems supporting operational teams and 5 client organizations</span></div>
+          <div><strong>Professional references</strong><span>Available upon request</span></div>
+        </aside>
         <div className="system-flow" data-reveal="fade-up" aria-label={text.flowLabel}>
           <div className="system-flow__title">{text.flowTitle}</div>
           <div className="system-flow__path">

@@ -3,7 +3,7 @@ import { Languages, Menu, Moon, Sun } from 'lucide-react'
 import './navbar.css'
 import { usePreferences } from '../../context/PreferencesContext'
 
-const linkIds = ['#home', '#about', '#experience', '#portfolio', '#services', '#github', '#writing', '#positions', '#contact']
+const linkIds = ['#home', '#services', '#case-studies', '#about', '#portfolio', '#experience', '#writing', '#github', '#positions', '#contact']
 
 const Navbar = () => {
   const [activeNav, setActiveNav] = useState('#home')
@@ -12,7 +12,9 @@ const Navbar = () => {
   const links = linkIds.map((id, index) => ({ id, label: copy.nav.links[index] }))
 
   useEffect(() => {
-    const handleScroll = () => {
+    let scrollFrame
+
+    const updateActiveSection = () => {
       const scrollPosition = window.scrollY + 120
       const sections = linkIds
         .map((id) => document.querySelector(id))
@@ -21,14 +23,28 @@ const Navbar = () => {
       for (let i = sections.length - 1; i >= 0; i -= 1) {
         const section = sections[i]
         if (section && section.offsetTop <= scrollPosition) {
-          setActiveNav(`#${section.id}`)
+          setActiveNav((current) => current === `#${section.id}` ? current : `#${section.id}`)
           break
         }
       }
+
+      scrollFrame = undefined
     }
 
+    const handleScroll = () => {
+      if (!scrollFrame) {
+        scrollFrame = window.requestAnimationFrame(updateActiveSection)
+      }
+    }
+
+    updateActiveSection()
     window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      if (scrollFrame) {
+        window.cancelAnimationFrame(scrollFrame)
+      }
+    }
   }, [])
 
   useEffect(() => {

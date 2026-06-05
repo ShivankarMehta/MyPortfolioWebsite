@@ -6,7 +6,7 @@ import { usePreferences } from '../../context/PreferencesContext'
 
 const technicalSkills = [
   {
-    items: ['JavaScript', 'C++', 'SQL', 'Python']
+    items: ['JavaScript', 'TypeScript', 'C++', 'SQL', 'Python']
   },
   {
     items: ['ReactJS', 'NextJS', 'HTML', 'CSS', 'Recharts', 'Tremor', 'Nivo', 'Browser APIs']

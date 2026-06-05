@@ -1,0 +1,91 @@
+@media screen and (max-width: 1100px) {
+  .module-panel--projects .services_container {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .credibility-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .case-study-list,
+  .case-study-results {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media screen and (max-width: 760px) {
+  :root {
+    --section-space: 1.25rem;
+    --content-gap: 0.75rem;
+  }
+
+  .module-panel--projects .services_container,
+  .case-study-block--split,
+  .case-study-narrative,
+  .case-study-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .case-study-hero__visual {
+    min-height: 0;
+  }
+
+  .architecture-chain {
+    grid-template-columns: 1fr;
+  }
+
+  .architecture-chain span:not(:last-child)::after {
+    right: auto;
+    bottom: -0.58rem;
+    transform: rotate(90deg);
+  }
+
+  .observatory__console.is-mobile-open {
+    grid-template-columns: 1fr;
+  }
+
+  .module-panel,
+  .os-surface {
+    width: min(100% - 1rem, 1460px);
+  }
+
+  .module-panel :is(
+    .experience_details,
+    .service,
+    .profile-signal,
+    .github__repo,
+    .article-card,
+    .position_card,
+    .contact_option,
+    .contact_brief,
+    form
+  ) {
+    border-radius: var(--ui-radius);
+  }
+}
+
+@media screen and (max-width: 430px) {
+  .observatory__mobile-controls {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+@media (min-resolution: 1dppx) {
+  @supports (zoom: 2) {
+    html {
+      text-size-adjust: 100%;
+    }
+  }
+}

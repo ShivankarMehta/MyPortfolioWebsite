@@ -9,8 +9,8 @@ const stackDomains = [
   {
     id: 'languages',
     orbit: 'CORE',
-    summary: 'JS / Python',
-    items: ['JavaScript', 'Python', 'C++', 'SQL']
+    summary: 'JS / TypeScript',
+    items: ['JavaScript', 'TypeScript', 'Python', 'C++', 'SQL']
   },
   {
     id: 'frontend',
@@ -112,8 +112,14 @@ const Header = () => {
         <div className="header__visual">
           <div className="observatory">
             <div className="observatory__header">
-              <span><i /> {text.observatory}</span>
-              <small>{text.productionProfile}</small>
+              <div className="observatory__header-copy">
+                <span><i /> {text.observatory}</span>
+                <small>Engineering operations overview</small>
+              </div>
+              <div className="observatory__header-meta">
+                <small>{text.productionProfile}</small>
+                <strong><i /> Healthy</strong>
+              </div>
             </div>
             <div className="observatory__stage">
               <svg className="observatory__fabric" viewBox="0 0 580 376" preserveAspectRatio="none" aria-hidden="true">
@@ -133,7 +139,15 @@ const Header = () => {
               <span className="observatory__ring observatory__ring--inner" aria-hidden="true" />
               <div className="header__halo">
                 <div className="header__image">
-                  <img src={ME} alt="Shivankar Mehta" width="1080" height="1350" fetchPriority="high" />
+                  <img
+                    src={ME}
+                    alt="Shivankar Mehta"
+                    width="1080"
+                    height="1350"
+                    loading="eager"
+                    decoding="async"
+                    fetchPriority="high"
+                  />
                 </div>
               </div>
               {stackDomains.map(({ id, orbit, summary }) => (
@@ -155,7 +169,7 @@ const Header = () => {
                 aria-expanded={openObservatoryPanel === 'logs'}
                 aria-controls="observatory-logs"
               >
-                Live logs
+                {openObservatoryPanel === 'logs' ? 'Hide activity' : 'Show activity'}
               </button>
               <button
                 type="button"
@@ -164,7 +178,7 @@ const Header = () => {
                 aria-expanded={openObservatoryPanel === 'stack'}
                 aria-controls="observatory-stack"
               >
-                Tech stack
+                {openObservatoryPanel === 'stack' ? 'Hide technology details' : 'Show technology details'}
               </button>
             </div>
             <div
@@ -173,8 +187,8 @@ const Header = () => {
             >
               <div className="console-panel terminal-panel">
                 <div className="console-panel__label">
-                  <span>terminal / live.log</span>
-                  <small>zsh</small>
+                  <span>Recent activity</span>
+                  <small>Last 24 hours</small>
                 </div>
                 {text.terminalEvents.map((event, index) => (
                   <p key={event}><small>{String(index + 1).padStart(2, '0')}</small>{event}</p>
@@ -183,8 +197,8 @@ const Header = () => {
               </div>
               <div className="console-panel packet-panel">
                 <div className="console-panel__label">
-                  <span>network / routes</span>
-                  <small>TX/RX</small>
+                  <span>Service health</span>
+                  <small>Operational</small>
                 </div>
                 {networkRoutes.map(({ endpoint, protocol, state }) => (
                   <div className="packet-row" key={endpoint}>

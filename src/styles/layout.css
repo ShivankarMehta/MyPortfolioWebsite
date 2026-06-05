@@ -1,0 +1,69 @@
+section {
+  padding-block: var(--section-space);
+}
+
+main > section {
+  background: var(--ui-bg) !important;
+  color: var(--ui-text);
+}
+
+main > section::before,
+main > section::after {
+  display: none;
+}
+
+main > section + section,
+main > div + section,
+main > section + div {
+  margin-top: 0;
+}
+
+.module-panel,
+.os-surface {
+  width: min(1460px, calc(100% - clamp(2rem, 6vw, 7rem)));
+}
+
+.module-panel {
+  padding-block: clamp(0.35rem, 0.8vw, 0.75rem);
+}
+
+.section-heading {
+  margin-bottom: clamp(1rem, 2vw, 1.6rem);
+}
+
+.services_container,
+.portfolio_container,
+.experience_container,
+.positions_container,
+.articles__grid,
+.github__repos,
+.profile-matrix__grid {
+  gap: var(--content-gap);
+}
+
+.module-panel--projects .services_container {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.module-panel--projects .service {
+  display: flex !important;
+  min-height: 100%;
+}
+
+.module-panel--projects .service:nth-child(1),
+.module-panel--projects .service:nth-child(2),
+.module-panel--projects .service:nth-child(3) {
+  grid-column: auto;
+  grid-template-columns: 1fr;
+  grid-template-areas: none;
+}
+
+.module-panel--projects .service:nth-child(1) > *,
+.module-panel--projects .service:nth-child(2) > *,
+.module-panel--projects .service:nth-child(3) > * {
+  grid-area: auto;
+}
+
+.case-study-grid {
+  align-items: start;
+}

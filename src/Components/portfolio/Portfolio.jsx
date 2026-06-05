@@ -40,7 +40,7 @@ const Portfolio = () => {
             <article className="portfolio_item" data-reveal="fade-up" key={company}>
               <span className="portfolio_item-node" aria-hidden="true" />
               <div className="portfolio_item-header">
-                <img className="portfolio_item-image" src={image} alt="" loading="lazy" decoding="async" />
+                <img className="portfolio_item-image" src={image} alt={`${role} work overview at ${company}`} loading="lazy" decoding="async" />
                 <span className="portfolio_item-meta">{dates}</span>
                 <h3>{role}</h3>
                 <p className="portfolio_item-company">{company}</p>

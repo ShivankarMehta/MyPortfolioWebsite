@@ -15,6 +15,7 @@ const CTA = () => {
         </span>
         <span className='cta__button-content'>
           <span className='cta__button-label'>{copy.header.download}</span>
+          <span className='cta__button-meta'>PDF · Updated June 2026</span>
         </span>
       </a>
       <a href="#contact" className='cta__button cta__button--primary' data-ripple>
