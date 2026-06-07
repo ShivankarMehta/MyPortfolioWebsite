@@ -19,11 +19,34 @@
     --content-gap: 0.75rem;
   }
 
+  html,
+  body,
+  #root,
+  .site-shell {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
   .module-panel--projects .services_container,
   .case-study-block--split,
   .case-study-narrative,
-  .case-study-hero {
+  .case-study-hero,
+  .header_container,
+  .about__container,
+  .contact_container,
+  .github__workspace,
+  .github__dashboard,
+  .experience_container,
+  .positions_container,
+  .articles__grid,
+  .profile-matrix__grid,
+  .contact_brief,
+  .business-card__shell {
     grid-template-columns: 1fr;
+  }
+
+  .module-panel * {
+    min-width: 0;
   }
 
   .case-study-hero__visual {
@@ -47,6 +70,7 @@
   .module-panel,
   .os-surface {
     width: min(100% - 1rem, 1460px);
+    max-width: calc(100vw - 1rem);
   }
 
   .module-panel :is(
@@ -62,12 +86,168 @@
   ) {
     border-radius: var(--ui-radius);
   }
+
+  .section-heading h2,
+  .header__title,
+  .case-study-hero__copy h3 {
+    overflow-wrap: anywhere;
+  }
+
+  .module-panel :is(
+    .service,
+    .experience_details,
+    .portfolio_item,
+    .article-card,
+    .position_card,
+    .contact_option,
+    .github__repo,
+    .profile-signal,
+    .leetcode-card,
+    .contact_brief,
+    form
+  ) {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .module-panel--projects .services_container,
+  .portfolio_container,
+  .experience_container,
+  .positions_container,
+  .articles__grid,
+  .github__repos,
+  .profile-matrix__grid {
+    grid-template-columns: 1fr !important;
+    width: 100%;
+  }
+
+  .case-study-list {
+    grid-template-columns: 1fr !important;
+  }
+
+  .case-study-tab {
+    grid-template-columns: auto auto minmax(0, 1fr);
+  }
+
+  .case-study-tab svg:last-child {
+    display: none;
+  }
+
+  .case-study-tab strong,
+  .case-study-tab small,
+  .github__repo-name,
+  .article-card h3 {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+  }
+
+  .observatory {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .observatory__stage,
+  .observatory__console,
+  .observatory__stack-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .observatory .header__halo {
+    width: min(100%, 320px);
+    margin-inline: auto;
+  }
+
+  .github__heatmap-frame {
+    max-width: 100%;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+  }
+
+  .github__heatmap-months,
+  .github__heatmap-grid,
+  .github__heatmap-legend {
+    min-width: 560px;
+  }
+
+  .github__repo {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
+
+  .github__repo time,
+  .github__repo > small {
+    grid-column: 2 / -1;
+  }
+
+  .article-modal__panel {
+    width: min(100% - 1rem, 720px);
+    max-height: calc(100dvh - 1rem);
+    overflow-y: auto;
+  }
+
+  .article-reader__terminal {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .article-reader__terminal small {
+    grid-column: 1 / -1;
+  }
+
+  .contact_brief-link,
+  .cta__button,
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
 }
 
 @media screen and (max-width: 430px) {
   .observatory__mobile-controls {
     display: grid;
     grid-template-columns: 1fr;
+  }
+
+  .module-panel,
+  .os-surface {
+    width: min(100% - 0.7rem, 1460px);
+    max-width: calc(100vw - 0.7rem);
+  }
+
+  .nav {
+    max-width: 100vw;
+  }
+
+  .nav__links {
+    gap: 0.75rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .nav__links::-webkit-scrollbar {
+    display: none;
+  }
+
+  .header__focus-grid,
+  .credibility-strip,
+  .case-study-results {
+    grid-template-columns: 1fr !important;
+  }
+
+  .portfolio_item-header {
+    grid-template-columns: 1fr !important;
+  }
+
+  .github__heatmap-months,
+  .github__heatmap-grid,
+  .github__heatmap-legend {
+    min-width: 500px;
+  }
+
+  .footer__container {
+    grid-template-columns: 1fr !important;
+    align-items: start;
+    text-align: left;
   }
 }
 
